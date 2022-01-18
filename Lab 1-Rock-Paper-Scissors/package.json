@@ -22,5 +22,8 @@
     "comp2068"
   ],
   "author": "Christofer Cousins",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "prompt": "^1.2.1"
+  }
 }
