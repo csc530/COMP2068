@@ -7,7 +7,7 @@ colours.setTheme({
     userInput: ['green', 'italic'],
     error: 'red',
     warning: ['yellow', 'trap'],
-    prompt: ['blue', 'bold', ]
+    prompt: ['blue', 'bold',]
 });
 const cUi = colours.userInput;
 const cError = colours.error;
@@ -25,9 +25,37 @@ let required = {
     type: 'string',
     description: colours.prompt("User's name: "),
 };
-prompt.get(required, (err, result) => {
+function getUserName() {
+    prompt.get(required, (err, result) => {
+        checkForErrors(err);
+        process.stdout.write(`So your name is ${cUi(result.name)}.\nHi ${cUi(result.name)} nice to meet you would you like to play rock paper scissors with me?\n`);
+    });
+}
+function checkForErrors(err) {
     if(err)
         console.error(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace: \n\n${err.stack}`);
-    process.stdout.write(`So your name is ${cUi(result.name)}.\nHi ${cUi(result.name)} nice to meet you would you like to play rock paper scissors with me?\n`);
-});
+    process.exit(1);
+}
 
+function playRPS() {
+    prompt.get('play', (err, result) => {
+        checkForErrors(err);
+        if(result)
+        console.log("great");
+    });
+}
+
+function explainRules() {
+    console.log(rules);
+    prompt.get(start,)
+}
+
+function play(){
+
+}
+
+function main() {
+    getUserName();
+}
+
+//main();
