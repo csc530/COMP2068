@@ -1,5 +1,4 @@
-//Node imports
-// const prompt = require("/usr/local/lib/node_modules/prompt/lib/prompt.js");
+// Node imports
 const prompt = require('prompt');
 const colours = require('colors/safe');
 
@@ -19,6 +18,7 @@ colours.setTheme({
 });
 
 /** Colour object: colours text passed to the called property function */
+//todo: auto cons.log for themes
 const themes = {
 	ui: colours.error,
 	warning: colours.warning,
@@ -30,7 +30,7 @@ const yesOrNo = ['yes', 'no', 'y', 'n', 'Yes', 'No'];
 
 function checkForErrors(err)
 {
-	if (err)
+	if(err)
 	{
 		console.log(themes.err(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace:\n${err.stack}`));
 		process.exit(1);
@@ -41,7 +41,7 @@ function checkForErrors(err)
  * @description This function will ask the user iof they would like to play rock-paper-scissors again
  * @fires the main function `main()`
  * @throws Stack overflow error
- *  * If the user keeps playinng again more then memory will allow for
+ * * If the user keeps playinng again more then memory will allow for
  * * With each 'y' to play again it will recurse another level calling the head method `main()`
  * @todo Prevent the possibility of a stack overflow error
  */
@@ -54,8 +54,7 @@ function playAgain()
 		enum: yesOrNo,
 		type: 'string'
 	};
-	prompt.get(query, (err, result) =>
-	{
+	prompt.get(query, (err, result) =>	{
 		checkForErrors(err);
 		main(result.playAgain[0]);
 	});
@@ -63,7 +62,7 @@ function playAgain()
 
 
 /**
- *  @description A function to dertermine who won given 2 arguments of rock, paper, or scissors
+ * @description A function to dertermine who won given 2 arguments of rock, paper, or scissors
  * @param {string} pc The pc's choice
  * @param {string} user The user's choice
  */
@@ -106,7 +105,6 @@ function winner(pc, user)
  * This will execute the game of rock-paper-scissors
  * It will get the user's choice and compare it to the computer's choice
  * and then a winner will be decided if there is one
-
  */
 function play()
 {
@@ -133,8 +131,7 @@ function play()
 		],
 	};
 	const pcChoice = randomRPS();
-	prompt.get(query, (err, result) =>
-	{
+	prompt.get(query, (err, result) =>	{
 		checkForErrors(err);
 		console.log(themes.ui(`I choose ${pcChoice}\n`));
 		winner(result.choice, pcChoice);
@@ -158,8 +155,7 @@ function explainRules()
 		'Scissors beats paper\n' +
 		'and\n' +
 		'Paper beats rock';
-	prompt.get(query, (err, result) =>
-	{
+	prompt.get(query, (err, result) =>	{
 		checkForErrors(err);
 		if (result['play'][0] === 'y')
 		{
@@ -167,9 +163,7 @@ function explainRules()
 			play();
 		}
 		else
-
 			console.log('That\'s ok 😃\nbye bye!');
-
 	});
 }
 
