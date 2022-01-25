@@ -32,13 +32,21 @@ function checkForErrors(err) {
 	}
 }
 
+
+/**
+ * @param {string} pc 
+ * @param {string} user 
+ */
+function winner(pc, user){
+
+}
 /**
  * This will execute the game of rock-paper-scissors
  * It will get the user's choice and compare it to the computer's choice
  * and then a winner will be decided if there is one
  */
- function play() {
-	const rps = {
+function play() {
+	const query = {
 		name: 'choice',
 		allowEmpty: false,
 		required: true,
@@ -48,7 +56,7 @@ function checkForErrors(err) {
 		enum: [
 			'rock',
 			'paper',
-			'Scissors',
+			'scissors',
 			's',
 			'p',
 			'r',
@@ -61,11 +69,15 @@ function checkForErrors(err) {
 		],
 	};
 	const pcChoice = randomRPS();
-	const choice = prompt.get(rps)['choice'];
+	prompt.get(query, (err, result) => {
+		checkForErrors(err);
+		console.log(themes.ui(`I choose ${pcChoice}\n`));	
+		return winner(pcChoice);
+	});
 }
 
 function explainRules() {
-	const prompt = {
+	const query = {
 		name: 'play', description: themes.prompt('Would you like to play rock-paper-scissors? '),
 		message: themes.warning('Please enter (Y)es or (N)o'),
 		type: 'string',
@@ -76,7 +88,7 @@ function explainRules() {
 		'Scissors beats paper\n' +
 		'and\n' +
 		'Paper beats rock';
-	prompt.get(prompt, (err, result) => {
+	prompt.get(query, (err, result) => {
 		checkForErrors(err);
 		if (result['play'][0] === 'y') {
 			console.log(rules + '\n--------------------------------\n');

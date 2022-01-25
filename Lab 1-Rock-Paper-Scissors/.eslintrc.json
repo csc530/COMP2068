@@ -18,6 +18,7 @@
             "error",
             "always"
         ],
-        "no-useless-return": "error"
+        "no-useless-return": "error",
+        "brace-style": [1,"allman", { "allowSingleLine": true }]
     }
 }
