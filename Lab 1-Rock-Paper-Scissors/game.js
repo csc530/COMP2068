@@ -25,22 +25,27 @@ const colour = {
 	prompt: colours.prompt,
 };
 
-
+/**
+ * A function that will prompt the user for thier name
+ * @returns the usser's name as a string
+ */
 function getUserName() {
-	/** a prompt schema to hold properties validation and  */
-	let required = {
+	/** a prompt schema to hold properties validation */
+	let name = {
 		name: 'name',
 		required: true,
 		message: colours.error("Please could you tell me you're name it would really make my day 😺"),
-		allowEmpty: false,
+		allowEmpty: true,
+		default: 'User',
 		type: 'string',
 		description: colours.prompt("User's name "),
 	};
-	prompt.get(required, (err, result) => {
+	prompt.get(name, (err, result) => {
 		checkForErrors(err);
 		process.stdout.write(`So your name is ${colour.ui(result.name)}.\n`);
 		process.stdout.write(`Hi ${colour.ui(result.name)}`);
 		console.log('nice to meet you would you like to play rock paper scissors with me?\n');
+		return result;
 	});
 }
 
@@ -61,13 +66,6 @@ async function explainRules() {
 }
 
 async function play() {
-	const playAgain = {
-		name: 'Play again,',
-		default: false,
-		type: 'boolean',
-		description: 'Do you want to play again?',
-		message: 'Play again? (Y/N)',
-	};
 	const rps = {
 		name: 'choice',
 		allowEmpty: false,
@@ -108,12 +106,24 @@ function randomRPS() {
 }
 
 function main() {
-	getUserName();
+	const playAgainProps = {
+		name: 'Play again,',
+		default: false,
+		type: 'boolean',
+		description: 'Do you want to play again?',
+		message: 'Play again? (Y/N)',
+	};
+	let name  = getUserName();
 	explainRules();
 	let playAgain = true;
 	while (playAgain) {
-		playAgain = play();
+		play();
+		prompt.get(playAgainProps, (err, res) => {
+			checkForErrors();
+			playAgain = res;
+		});
 	}
+
 }
 
 //Starts the rock paper scissors game
