@@ -1,21 +1,23 @@
 //Node imports
-const prompt = require("prompt");
-const colours = require("colors/safe");
+// const prompt = require("/usr/local/lib/node_modules/prompt/lib/prompt.js");
+const prompt = require('prompt');
+const colours = require('colors/safe');
 
 //setup prompt and colours module
 prompt.start();
-prompt.message = "";
-prompt.delimiter = "";
+prompt.message = '';
+prompt.delimiter = '';
 prompt.colors = true;
 colours.enable();
 
 //create colour themes when printing to the console
 colours.setTheme({
-	userInput: ["green", "italic"],
-	error: "red",
-	warning: ["yellow", "trap"],
-	prompt: ["blue", "bold",]
+	userInput: ['green', 'italic'],
+	error: 'red',
+	warning: ['yellow', 'trap'],
+	prompt: ['blue', 'bold',]
 });
+
 /** Colour object: colours text passed to the called property function */
 const colour = {
 	ui: colours.error,
@@ -24,11 +26,11 @@ const colour = {
 };
 /** a prompt schema to hold properties validation and  */
 let required = {
-	"name": "name",
+	'name': 'name',
 	required: true,
 	message: colours.error("Please could you tell me you're name it would really make my day :)"),
 	allowEmpty: false,
-	type: "string",
+	type: 'string',
 	description: colours.prompt("User's name "),
 };
 function getUserName() {
@@ -44,17 +46,34 @@ function checkForErrors(err) {
 }
 
 async function explainRules() {
+	const rules = 'Rock beats scissors' +
+		'\nScissors beats paper' +
+		'\nand' +
+		'\nPaper beats rock';
 	console.log(rules);
-	return await prompt.get("start")['start'];
+	return await prompt.get('start')['start'];
 }
 
-function play() {
-
+async function play() {
+	const playAgain = {
+		name: 'Play again,',
+		default: false,
+		type: 'boolean',
+		description: 'Do you want to play again?',
+		message: 'Play again? (Y/N)',
+	};
+	const rps = null;
+	const choice = rps();
+	const userChoice = prompt.get({name: 'rps'});
 }
 
 function main() {
 	getUserName();
+	explainRules();
+	let playAgain = true;
+	while (playAgain)
+		playAgain = play();
 }
 
 //Starts the rock paper scissors game
- main();
+main();
