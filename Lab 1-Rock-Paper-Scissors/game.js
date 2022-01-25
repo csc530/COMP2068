@@ -25,6 +25,9 @@ const themes = {
 	prompt: colours.prompt,
 };
 
+/**An array reprsenting the accepted inputs to a yes or no question using prompt */
+const yesOrNo = ['yes', 'no', 'y', 'n', 'Yes', 'No'];
+
 function checkForErrors(err)
 {
 	if (err)
@@ -32,6 +35,21 @@ function checkForErrors(err)
 		console.log(themes.err(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace:\n${err.stack}`));
 		process.exit(1);
 	}
+}
+
+function playAgain()
+{
+	const query = {
+		'name': 'playAgain',
+		description: themes.prompt('Would you like to play again? (y/n) '),
+		message: themes.warning('Play again? (Y/N)'),
+		enum: yesOrNo,
+		type: 'string'
+	};
+	prompt.get(query, (err, result)=>
+	{
+		return result.playAgain;
+	});
 }
 
 
@@ -51,19 +69,19 @@ function winner(pc, user)
 		switch (pc)
 		{
 		case 'r':
-			if(user === 's')
+			if (user === 's')
 				console.log('Haha, I win!');
 			else
 				console.log('Darn, you beat me!\nYou win!🏅');
 			break;
 		case 's':
-			if(user === 'r')
+			if (user === 'r')
 				console.log('Wow! You won!\nCongratulations!🎉');
 			else
 				console.log('😎\nLooks like I beat you!\nI won!');
 			break;
 		case 'p':
-			if(user ==='s')
+			if (user === 's')
 				console.log('Amazing! You won!🌟');
 			else
 				console.log('Hehehe, winner winner.\nI\'m the winner!🥳');
@@ -73,7 +91,7 @@ function winner(pc, user)
 			break;
 		}
 	}
-	return '';
+	return playAgain();
 }
 /**
  * This will execute the game of rock-paper-scissors
@@ -119,7 +137,7 @@ function explainRules()
 		name: 'play', description: themes.prompt('Would you like to play rock-paper-scissors? '),
 		message: themes.warning('Please enter (Y)es or (N)o'),
 		type: 'string',
-		enum: ['yes', 'no', 'y', 'n', 'Yes', 'No'],
+		enum: yesOrNo,
 	};
 	const rules = 'Here are the rules of the game.\n' +
 		'Rock beats scissors\n' +
@@ -157,16 +175,8 @@ function randomRPS()
 /**
  * Main function the application will run to play Rock-Paper-Scissors
  */
-//TODO: Chain together all prompts so they're result calls the next apprpriate method mighyt cause some recursion byt eh 🤷
 function main()
 {
-	const playAgainProps = {
-		name: 'Play again,',
-		default: false,
-		type: 'boolean',
-		description: themes.prompt('Do you want to play again?'),
-		message: themes.warning('Play again? (Y/N)'),
-	};
 	explainRules();
 	//	let playAgain = true;
 	//	while (playAgain) {
