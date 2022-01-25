@@ -15,7 +15,7 @@ colours.setTheme({
 	userInput: ['green', 'italic'],
 	error: 'red',
 	warning: ['yellow', 'trap'],
-	prompt: ['blue', 'bold',]
+	prompt: ['blue', 'bold'],
 });
 
 /** Colour object: colours text passed to the called property function */
@@ -24,32 +24,38 @@ const colour = {
 	warning: colours.warninig,
 	prompt: colours.prompt,
 };
-/** a prompt schema to hold properties validation and  */
-let required = {
-	'name': 'name',
-	required: true,
-	message: colours.error("Please could you tell me you're name it would really make my day :)"),
-	allowEmpty: false,
-	type: 'string',
-	description: colours.prompt("User's name "),
-};
+
+
 function getUserName() {
+	/** a prompt schema to hold properties validation and  */
+	let required = {
+		name: 'name',
+		required: true,
+		message: colours.error("Please could you tell me you're name it would really make my day 😺"),
+		allowEmpty: false,
+		type: 'string',
+		description: colours.prompt("User's name "),
+	};
 	prompt.get(required, (err, result) => {
 		checkForErrors(err);
-		process.stdout.write(`So your name is ${colour.ui(result.name)}.\nHi ${colour.ui(result.name)} nice to meet you would you like to play rock paper scissors with me?\n`);
+		process.stdout.write(`So your name is ${colour.ui(result.name)}.\n`);
+		process.stdout.write(`Hi ${colour.ui(result.name)}`);
+		console.log('nice to meet you would you like to play rock paper scissors with me?\n');
 	});
 }
+
 function checkForErrors(err) {
 	if (err)
-		console.error(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace: \n\n${err.stack}`);
+		console.log(colours.err(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace:\n${err.stack}`));
 	process.exit(1);
 }
 
 async function explainRules() {
-	const rules = 'Rock beats scissors' +
-		'\nScissors beats paper' +
-		'\nand' +
-		'\nPaper beats rock';
+	const rules =
+		'Rock beats scissors\n' +
+		'Scissors beats paper\n' +
+		'and\n' +
+		'Paper beats rock';
 	console.log(rules);
 	return await prompt.get('start')['start'];
 }
@@ -62,17 +68,52 @@ async function play() {
 		description: 'Do you want to play again?',
 		message: 'Play again? (Y/N)',
 	};
-	const rps = null;
-	const choice = rps();
-	const userChoice = prompt.get({name: 'rps'});
+	const rps = {
+		name: 'choice',
+		allowEmpty: false,
+		required: true,
+		description: 'Choose to play (R)ock, (P)aper, or (S)cissors: ',
+		message: 'Please enter either R, P, or S',
+		type: 'string',
+		enum: [
+			'rock',
+			'paper',
+			'Scissors',
+			's',
+			'p',
+			'r',
+			'R',
+			'P',
+			'S',
+			'Rock',
+			'Paper',
+			'Scissors',
+		],
+	};
+	const pcChoice = randomRPS();
+	const {choice} = await prompt.get(rps)['choice'];
+}
+
+/**
+ * A function to randomly pick rock paper or scissors
+ * @returns a string of either rock, paper, or scissors
+ */
+function randomRPS() {
+	//Math.random() function to generate a number as computerSelection:
+	//0 - .34 => PAPER,.35 - .67 => SCISSORS, .68 - 1 => ROCK
+	const num = Math.random();
+	if (num < 0.35) return 'paper';
+	else if (num < 0.68) return 'scissors';
+	else return 'rock';
 }
 
 function main() {
 	getUserName();
 	explainRules();
 	let playAgain = true;
-	while (playAgain)
+	while (playAgain) {
 		playAgain = play();
+	}
 }
 
 //Starts the rock paper scissors game
