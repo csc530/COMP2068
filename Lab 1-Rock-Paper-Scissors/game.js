@@ -13,56 +13,23 @@ colours.enable();
 //create colour themes when printing to the console
 colours.setTheme({
 	userInput: ['green', 'italic'],
-	error: 'red',
-	warning: ['yellow', 'trap'],
-	prompt: ['blue', 'bold'],
+	error: ['red', 'bold'],
+	warning: ['yellow', 'underline'],
+	prompt: 'blue',
 });
 
 /** Colour object: colours text passed to the called property function */
 const themes = {
 	ui: colours.error,
-	warning: colours.warninig,
+	warning: colours.warning,
 	prompt: colours.prompt,
 };
 
-/**
- * A function that will prompt the user for thier name
- * @returns the usser's name as a string
- */
-function getUserName() {
-	/** a prompt schema to hold properties validation */
-	let name = {
-		name: 'name',
-		required: true,
-		message: themes.warning("Please could you tell me you're name it would really make my day 😺"),
-		allowEmpty: true,
-		default: 'User',
-		type: 'string',
-		description: themes.prompt("User's name "),
-	};
-	prompt.get(name, (err, result) => {
-		checkForErrors(err);
-		process.stdout.write(`So your name is ${themes.ui(result.name)}.\n`);
-		process.stdout.write(`Hi ${themes.ui(result.name)}`);
-		console.log('nice to meet you would you like to play rock paper scissors with me?\n');
-		return result;
-	});
-}
-
 function checkForErrors(err) {
-	if (err)
+	if (err) {
 		console.log(themes.err(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace:\n${err.stack}`));
-	process.exit(1);
-}
-
-async function explainRules() {
-	const rules =
-		'Rock beats scissors\n' +
-		'Scissors beats paper\n' +
-		'and\n' +
-		'Paper beats rock';
-	console.log(rules);
-	return await prompt.get('start')['start'];
+		process.exit(1);
+	}
 }
 
 /**
@@ -70,7 +37,7 @@ async function explainRules() {
  * It will get the user's choice and compare it to the computer's choice
  * and then a winner will be decided if there is one
  */
-async function play() {
+ function play() {
 	const rps = {
 		name: 'choice',
 		allowEmpty: false,
@@ -94,8 +61,32 @@ async function play() {
 		],
 	};
 	const pcChoice = randomRPS();
-	const {choice} = await prompt.get(rps)['choice'];
+	const choice = prompt.get(rps)['choice'];
 }
+
+function explainRules() {
+	const prompt = {
+		name: 'play', description: themes.prompt('Would you like to play rock-paper-scissors? '),
+		message: themes.warning('Please enter (Y)es or (N)o'),
+		type: 'string',
+		enum: ['yes', 'no', 'y', 'n', 'Yes', 'No'],
+	};
+	const rules = 'Here are the rules of the game.\n' +
+		'Rock beats scissors\n' +
+		'Scissors beats paper\n' +
+		'and\n' +
+		'Paper beats rock';
+	prompt.get(prompt, (err, result) => {
+		checkForErrors(err);
+		if (result['play'][0] === 'y') {
+			console.log(rules + '\n--------------------------------\n');
+			return play();
+		}
+		else
+			console.log('That\'s ok 😃\nbye bye!');
+	});
+}
+
 
 /**
  * A function to randomly pick rock paper or scissors
@@ -113,6 +104,7 @@ function randomRPS() {
 /**
  * Main function the application will run to play Rock-Paper-Scissors
  */
+//TODO: Chain together all prompts so they're result calls the next apprpriate method mighyt cause some recursion byt eh 🤷
 function main() {
 	const playAgainProps = {
 		name: 'Play again,',
@@ -121,17 +113,16 @@ function main() {
 		description: themes.prompt('Do you want to play again?'),
 		message: themes.warning('Play again? (Y/N)'),
 	};
-	let name  = getUserName();
 	explainRules();
-	let playAgain = true;
-	while (playAgain) {
-		play();
-		prompt.get(playAgainProps, (err, res) => {
-			checkForErrors();
-			playAgain = res;
-		});
-	}
-	console.log(themes.ui(`Good bye for ${name}`));
+	//	let playAgain = true;
+	//	while (playAgain) {
+	//		play();
+	//		prompt.get(playAgainProps, (err, res) => {
+	///			checkForErrors();
+	//			playAgain = res;
+	//		});
+	//	}
+	//	console.log(themes.ui(`Good bye for ${name}`));
 }
 
 //Starts the rock paper scissors game
