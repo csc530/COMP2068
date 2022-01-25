@@ -19,7 +19,7 @@ colours.setTheme({
 });
 
 /** Colour object: colours text passed to the called property function */
-const colour = {
+const themes = {
 	ui: colours.error,
 	warning: colours.warninig,
 	prompt: colours.prompt,
@@ -34,16 +34,16 @@ function getUserName() {
 	let name = {
 		name: 'name',
 		required: true,
-		message: colours.error("Please could you tell me you're name it would really make my day 😺"),
+		message: themes.warning("Please could you tell me you're name it would really make my day 😺"),
 		allowEmpty: true,
 		default: 'User',
 		type: 'string',
-		description: colours.prompt("User's name "),
+		description: themes.prompt("User's name "),
 	};
 	prompt.get(name, (err, result) => {
 		checkForErrors(err);
-		process.stdout.write(`So your name is ${colour.ui(result.name)}.\n`);
-		process.stdout.write(`Hi ${colour.ui(result.name)}`);
+		process.stdout.write(`So your name is ${themes.ui(result.name)}.\n`);
+		process.stdout.write(`Hi ${themes.ui(result.name)}`);
 		console.log('nice to meet you would you like to play rock paper scissors with me?\n');
 		return result;
 	});
@@ -51,7 +51,7 @@ function getUserName() {
 
 function checkForErrors(err) {
 	if (err)
-		console.log(colours.err(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace:\n${err.stack}`));
+		console.log(themes.err(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace:\n${err.stack}`));
 	process.exit(1);
 }
 
@@ -65,13 +65,18 @@ async function explainRules() {
 	return await prompt.get('start')['start'];
 }
 
+/**
+ * This will execute the game of rock-paper-scissors
+ * It will get the user's choice and compare it to the computer's choice
+ * and then a winner will be decided if there is one
+ */
 async function play() {
 	const rps = {
 		name: 'choice',
 		allowEmpty: false,
 		required: true,
-		description: 'Choose to play (R)ock, (P)aper, or (S)cissors: ',
-		message: 'Please enter either R, P, or S',
+		description: themes.prompt('Choose to play (R)ock, (P)aper, or (S)cissors: '),
+		message: themes.warning('Please enter either R, P, or S'),
 		type: 'string',
 		enum: [
 			'rock',
@@ -105,13 +110,16 @@ function randomRPS() {
 	else return 'rock';
 }
 
+/**
+ * Main function the application will run to play Rock-Paper-Scissors
+ */
 function main() {
 	const playAgainProps = {
 		name: 'Play again,',
 		default: false,
 		type: 'boolean',
-		description: 'Do you want to play again?',
-		message: 'Play again? (Y/N)',
+		description: themes.prompt('Do you want to play again?'),
+		message: themes.warning('Play again? (Y/N)'),
 	};
 	let name  = getUserName();
 	explainRules();
@@ -123,7 +131,7 @@ function main() {
 			playAgain = res;
 		});
 	}
-
+	console.log(themes.ui(`Good bye for ${name}`));
 }
 
 //Starts the rock paper scissors game
