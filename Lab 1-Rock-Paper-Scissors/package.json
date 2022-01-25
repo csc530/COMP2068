@@ -23,9 +23,6 @@
   ],
   "author": "Christofer Cousins",
   "license": "ISC",
-  "dependencies": {
-    "prompt": "^1.2.1"
-  },
   "devDependencies": {
     "eslint": "^8.7.0"
   }
