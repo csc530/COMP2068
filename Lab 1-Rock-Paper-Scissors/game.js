@@ -37,6 +37,14 @@ function checkForErrors(err)
 	}
 }
 
+/**
+ * @description This function will ask the user iof they would like to play rock-paper-scissors again
+ * @fires the main function `main()`
+ * @throws Stack overflow error
+ *  * If the user keeps playinng again more then memory will allow for
+ * * With each 'y' to play again it will recurse another level calling the head method `main()`
+ * @todo Prevent the possibility of a stack overflow error
+ */
 function playAgain()
 {
 	const query = {
@@ -46,15 +54,16 @@ function playAgain()
 		enum: yesOrNo,
 		type: 'string'
 	};
-	prompt.get(query, (err, result)=>
+	prompt.get(query, (err, result) =>
 	{
-		return result.playAgain;
+		checkForErrors(err);
+		main(result.playAgain[0]);
 	});
 }
 
 
 /**
- *  * A function to dertermine who won given 2 arguments of rock, paper, or scissors
+ *  @description A function to dertermine who won given 2 arguments of rock, paper, or scissors
  * @param {string} pc The pc's choice
  * @param {string} user The user's choice
  */
@@ -91,12 +100,13 @@ function winner(pc, user)
 			break;
 		}
 	}
-	return playAgain();
+	playAgain();
 }
 /**
  * This will execute the game of rock-paper-scissors
  * It will get the user's choice and compare it to the computer's choice
  * and then a winner will be decided if there is one
+
  */
 function play()
 {
@@ -127,10 +137,14 @@ function play()
 	{
 		checkForErrors(err);
 		console.log(themes.ui(`I choose ${pcChoice}\n`));
-		return winner(result.choice, pcChoice);
+		winner(result.choice, pcChoice);
 	});
 }
 
+/**
+ * @description This will print a message of the rules of the game rock-paper-scissors
+ * then aske them if they'd like to play
+ */
 function explainRules()
 {
 	const query = {
@@ -150,10 +164,12 @@ function explainRules()
 		if (result['play'][0] === 'y')
 		{
 			console.log(rules + '\n--------------------------------\n');
-			return play();
+			play();
 		}
 		else
+
 			console.log('That\'s ok 😃\nbye bye!');
+
 	});
 }
 
@@ -178,15 +194,6 @@ function randomRPS()
 function main()
 {
 	explainRules();
-	//	let playAgain = true;
-	//	while (playAgain) {
-	//		play();
-	//		prompt.get(playAgainProps, (err, res) => {
-	///			checkForErrors();
-	//			playAgain = res;
-	//		});
-	//	}
-	//	console.log(themes.ui(`Good bye for ${name}`));
 }
 
 //Starts the rock paper scissors game
