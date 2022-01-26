@@ -1,7 +1,7 @@
 {
   "name": "lab-1-rock-paper-scissors",
   "version": "1.0.0",
-  "description": "Lab 1 for comp2068. A rock-paper-scissors game using CLI and node.js.",
+  "description": "Lab 1 for comp2068. A rock-paper-scissors game using CLI and node.js' prompt module.",
   "main": "game.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,7 +19,8 @@
     "paper",
     "scissors",
     "lab",
-    "comp2068"
+    "comp2068",
+    "prompt "
   ],
   "author": "Christofer Cousins",
   "license": "ISC",

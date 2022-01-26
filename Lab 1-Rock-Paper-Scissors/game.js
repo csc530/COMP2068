@@ -28,8 +28,7 @@ const themes = {
 /**An array reprsenting the accepted inputs to a yes or no question using prompt */
 const yesOrNo = ['yes', 'no', 'y', 'n', 'Yes', 'No'];
 
-function checkForErrors(err)
-{
+function checkForErrors(err){
 	if(err)
 	{
 		console.error(themes.err(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace:\n${err.stack}`));
@@ -45,8 +44,7 @@ function checkForErrors(err)
  * * With each 'y' to play again it will recurse another level calling the head method `play()`
  * @todo Prevent the possibility of a stack overflow error
  */
-function playAgain()
-{
+function playAgain(){
 	const query = {
 		'name': 'playAgain',
 		description: themes.prompt('Would you like to play again? (y/n) '),
@@ -69,8 +67,7 @@ function playAgain()
  * @param {string} pc The pc's choice
  * @param {string} user The user's choice
  */
-function winner(pc, user)
-{
+function winner(pc, user){
 	pc = pc[0].toLowerCase();
 	user = user[0].toLowerCase();
 	let msg;
@@ -111,8 +108,7 @@ function winner(pc, user)
  * It will get the user's choice and compare it to the computer's choice
  * and then a winner will be decided if there is one
  */
-function play()
-{
+function play(){
 	const query = {
 		name: 'choice',
 		allowEmpty: false,
@@ -147,8 +143,7 @@ function play()
  * @description This will print a message of the rules of the game rock-paper-scissors
  * then aske them if they'd like to play
  */
-function explainRules()
-{
+function explainRules(){
 	const query = {
 		name: 'play',
 		description: themes.prompt('Would you like to play rock-paper-scissors? '),
@@ -178,8 +173,7 @@ function explainRules()
  * A function to randomly pick rock paper or scissors
  * @returns a string of either rock, paper, or scissors
  */
-function randomRPS()
-{
+function randomRPS(){
 	//Math.random() function to generate a number as computerSelection:
 	//0 - .34 => PAPER,.35 - .67 => SCISSORS, .68 - 1 => ROCK
 	const num = Math.random();
@@ -191,8 +185,7 @@ function randomRPS()
 /**
  * Main function the application will run to play Rock-Paper-Scissors
  */
-function main()
-{
+function main(){
 	explainRules();
 }
 
