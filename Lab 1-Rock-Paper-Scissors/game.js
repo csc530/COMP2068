@@ -18,11 +18,11 @@ colours.setTheme({
 });
 
 /** Colour object: colours text passed to the called property function */
-//todo: auto cons.log for themes
 const themes = {
-	ui: colours.error,
+	ui: colours.userInput,
 	warning: colours.warning,
 	prompt: colours.prompt,
+	err: colours.error,
 };
 
 /**An array reprsenting the accepted inputs to a yes or no question using prompt */
@@ -32,17 +32,17 @@ function checkForErrors(err)
 {
 	if(err)
 	{
-		console.log(themes.err(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace:\n${err.stack}`));
+		console.error(themes.err(`Something has gone wrong.\n${err.name}: ${err.message}\nStack Trace:\n${err.stack}`));
 		process.exit(1);
 	}
 }
 
 /**
  * @description This function will ask the user iof they would like to play rock-paper-scissors again
- * @fires the main function `main()`
+ * @fires the main function `play()`
  * @throws Stack overflow error
  * * If the user keeps playinng again more then memory will allow for
- * * With each 'y' to play again it will recurse another level calling the head method `main()`
+ * * With each 'y' to play again it will recurse another level calling the head method `play()`
  * @todo Prevent the possibility of a stack overflow error
  */
 function playAgain()
@@ -56,7 +56,10 @@ function playAgain()
 	};
 	prompt.get(query, (err, result) =>	{
 		checkForErrors(err);
-		main(result.playAgain[0]);
+		if(result && result.playAgain && result.playAgain[0].toLowerCase() === 'y')
+			play();
+		else
+			console.log('I\'ve enjoyed our game bye-bye!');
 	});
 }
 
@@ -70,35 +73,37 @@ function winner(pc, user)
 {
 	pc = pc[0].toLowerCase();
 	user = user[0].toLowerCase();
+	let msg;
 	if (pc === user)
-		console.log(themes.ui("It's a tie!👔"));
+		msg = "It's a tie!👔";
 	else
 	{
 		switch (pc)
 		{
 		case 'r':
 			if (user === 's')
-				console.log('Haha, I win!');
+				msg = ('Haha, I win!');
 			else
-				console.log('Darn, you beat me!\nYou win!🏅');
+				msg = ('Darn, you beat me!\nYou win!🏅');
 			break;
 		case 's':
 			if (user === 'r')
-				console.log('Wow! You won!\nCongratulations!🎉');
+				msg = ('Wow! You won!\nCongratulations!🎉');
 			else
-				console.log('😎\nLooks like I beat you!\nI won!');
+				msg = ('😎\nLooks like I beat you!\nI won!');
 			break;
 		case 'p':
 			if (user === 's')
-				console.log('Amazing! You won!🌟');
+				msg = ('Amazing! You won!🌟');
 			else
-				console.log('Hehehe, winner winner.\nI\'m the winner!🥳');
+				msg = ('Hehehe, winner winner.\nI\'m the winner!🥳');
 			break;
 		default:
-			console.error('Oops! Looks like something went wrong');
+			console.error(themes.error('Oops! Looks like something went wrong'));
 			break;
 		}
 	}
+	console.log(themes.ui(msg));
 	playAgain();
 }
 /**
@@ -133,7 +138,7 @@ function play()
 	const pcChoice = randomRPS();
 	prompt.get(query, (err, result) =>	{
 		checkForErrors(err);
-		console.log(themes.ui(`I choose ${pcChoice}\n`));
+		console.log(`I choose ${pcChoice}\n`);
 		winner(result.choice, pcChoice);
 	});
 }
@@ -145,7 +150,8 @@ function play()
 function explainRules()
 {
 	const query = {
-		name: 'play', description: themes.prompt('Would you like to play rock-paper-scissors? '),
+		name: 'play',
+		description: themes.prompt('Would you like to play rock-paper-scissors? '),
 		message: themes.warning('Please enter (Y)es or (N)o'),
 		type: 'string',
 		enum: yesOrNo,
@@ -159,7 +165,7 @@ function explainRules()
 		checkForErrors(err);
 		if (result['play'][0] === 'y')
 		{
-			console.log(rules + '\n--------------------------------\n');
+			console.log(colours.inverse(rules) + '\n--------------------------------\n');
 			play();
 		}
 		else
