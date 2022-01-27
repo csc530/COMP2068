@@ -19,6 +19,6 @@
             "always"
         ],
         "no-useless-return": "error",
-        "brace-style": [1,"allman", { "allowSingleLine": true }],
+        //"brace-style": [1,"", { "allowSingleLine": true }],
         "space-after-keywords": ["error", "never"]    }
 }
