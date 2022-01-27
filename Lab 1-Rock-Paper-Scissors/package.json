@@ -2,7 +2,7 @@
   "name": "lab-1-rock-paper-scissors",
   "version": "1.0.0",
   "description": "Lab 1 for comp2068. A rock-paper-scissors game using CLI and node.js' prompt module.",
-  "main": "game.js",
+  "main": "lab1.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,6 +28,7 @@
     "eslint": "^8.7.0"
   },
   "dependencies": {
+    "connect": "^3.7.0",
     "prompt": "^1.2.1"
   }
 }
