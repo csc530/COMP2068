@@ -16,6 +16,20 @@ const methods =
 	'divide': {
 		name: ['divide',],
 		symbol: ' ÷ '
+	},
+	findMethod: function(val){
+		let keys = Object.keys(this);
+		let names = Object.values(this)
+			.map((val)=>val.name)
+			.slice(0,-1);
+		for(let i = 0; i < names.length; i++) {
+			for(let j = 0; j < names[i].length; j++) {
+				const name = names[i][j];
+				if(name === val)
+					return keys[i];
+			}
+		}
+		return null;
 	}
 };
 let app = connect();
@@ -39,7 +53,7 @@ function print(result, operation, terms, req, res) {
 	</head>
 	
 	<body class="container">
-		<h1 class="display-1">Simple Calculator</h1>
+		<h1 class="display-1">Simple Calculator🧮 </h1>
 		<h2 class="display-4">Operation: <strong>${operation.toUpperCase()}</strong></h2>
 		<h2 class="display-4">Terms: <small>(in order)</small></h2>
 		<ol class="list-group">
@@ -56,7 +70,7 @@ function print(result, operation, terms, req, res) {
 	res.end(msg, 'utf8');
 }
 function calculate(operation, request, response, next) {
-	const method = operation.method;
+	const method = methods.findMethod(operation.method);
 	//converts array (elements) to Number (type)
 	const terms = Object.values(operation).slice(1).map(Number);
 	let result = Number(0);
@@ -70,7 +84,7 @@ function calculate(operation, request, response, next) {
 	case'subtract':
 		result = terms[0];
 		for(let i = 1; i < terms.length; i++)
-			result += terms[i]; break;
+			result -= terms[i]; break;
 	case'multiply':
 		result = terms[0];
 		terms.slice(1).forEach((value) => result *= value);
@@ -85,7 +99,7 @@ function calculate(operation, request, response, next) {
 	}
 	//no next function because it's the end of the end of middleware calls
 	//no chances of erros
-	print(result, operation.method, terms, request, response);
+	print(result, method, terms, request, response);
 }
 function parseUrl(req, res, next) {
 	//gets each of the parameters from the url
@@ -104,13 +118,7 @@ function parseUrl(req, res, next) {
 			writable: true
 		});
 	}
-	//gets value form methods object name and symbols
-	var validMethodNames = Object.values(methods)
-		//creates an array from just the name properties
-		.map((value) => value.name)
-		//adds the names from each sub array (of valid method names) to one unified array, to `validMethodNames` var
-		.flat();
-	if(!validMethodNames.includes(operation.method))
+	if(!methods.findMethod(operation.method))
 		next(new Error('Method "' + operation.method + '" does not exist.'));
 	else
 		calculate(operation, req, res, next);
@@ -119,7 +127,7 @@ function parseUrl(req, res, next) {
 function err(error, req, res) {
 	res.writeHead(400, error.message);
 	const msg = '<h1>Error</h1><p>' + error.message + '</p>';
-	res.write(msg, 'utf-8');
+	res.write(msg, 'utf8');
 	res.end();
 }
 
