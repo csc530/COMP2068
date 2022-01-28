@@ -1,4 +1,8 @@
 const connect = require('connect');
+/**
+ * contains the name of each method the calculator can perform
+ * and the associated symbol of such
+ */
 const methods =
 {
 	'add': {
@@ -6,17 +10,22 @@ const methods =
 		symbol: ' + ',
 	},
 	'subtract': {
-		name: ['subtract', 'minus','subtraction'],
+		name: ['subtract', 'minus', 'subtraction'],
 		symbol: ' - ',
 	},
 	'multiply': {
-		name: ['multiply', 'times','multiplication'],
+		name: ['multiply', 'times', 'multiplication'],
 		symbol: ' × ',
 	},
 	'divide': {
-		name: ['divide','division'],
+		name: ['divide', 'division'],
 		symbol: ' ÷ '
 	},
+	/**
+	 * function to determine if the string is one of the name of a method
+	 * @param {string} val the string to check
+	 * @returns null if the string is not one of the name of a method, or returns the property name of the method it was found in
+	 */
 	findMethod: function (val) {
 		let keys = Object.keys(this);
 		let names = Object.values(this)
@@ -32,12 +41,27 @@ const methods =
 		return null;
 	}
 };
+
+//creates the app
 let app = connect();
+//docks app to port 300
 app.listen(3000);
-function print(result, operation, terms, req, res) {
+
+/**
+ * This will print an html page of the completed math function to the ServerResponse object
+ * @param {Number} result The result of the math function
+ * @param {string} operation The math operation that was completed
+ * @param {Array.<Number>} terms the values of the math operation
+ * @param {ServerResonse} res The Server response to send back to the user
+ */
+function print(result, operation, terms, res) {
+	res.writeHead(200, 'All done!');
+	//wraps each terms in HTML
 	terms = terms.map((value) => value = '<strong>' + String(value) + '</strong>');
 	let termsList = [];
+	//creates an HTML list for each term
 	terms.forEach((term) => termsList.push(`<li class="display-6 list-group-item" col-1>${term}</li>`));
+	//html page to print
 	const msg = `
 	<!DOCTYPE html>
 	<html>
@@ -69,46 +93,66 @@ function print(result, operation, terms, req, res) {
 	</html>`;
 	res.end(msg, 'utf8');
 }
-function calculate(operation, request, response, next) {
+
+/**
+ * @param {Object} operation An object holding the math operation to perform, 'method', and the terms to execute it on, as subsequent properties
+ * @param {ServerResponse} response The Server response to send back to the user
+ * @param {connect.NextFunction} next The next function to execute in case of success or failure
+ * @returns void
+ */
+function calculate(operation, response, next) {
+	//gets standard name of method
 	const method = methods.findMethod(operation.method);
 	//converts array (elements) to Number (type)
 	const terms = Object.values(operation).slice(1).map(Number);
 	let result = Number(0);
+	//validates there are enough arguments to do the math
 	if(terms.length < 2)
 		next(Error('2 arguments are required. Not enough arguments to perform valid math operations'));
-	else
-	{
+	else{
+		//performs correct math operation according to method var
 		switch(method) {
 		case'add':
 			for(let i = 0; i < terms.length; i++)
 				result += terms[i];
 			break;
 		case'subtract':
+			//sets the initail value as the first url var and subtracts the rest from it
 			result = terms[0];
 			for(let i = 1; i < terms.length; i++)
 				result -= terms[i];
 			break;
 		case'multiply':
+			//sets the initail value as the first url var so it doesn't just multiuply by zero
 			result = terms[0];
 			terms.slice(1).forEach((value) => result *= value);
-
 			break;
 		case'divide':
+			//sets the divisor value as the first url var so it doesn't just divide by zero
 			result = terms[0];
+			//check if the divisor is zero
 			if(terms.slice(1).includes(0))
 				return next(Error('Dividing by zero is not allowed'));
 			else
 				terms.slice(1).forEach((value) => result /= value);
 			break;
 		default:
+			//if something weird happens throw an error
 			return next(new Error('Invalid method'));
 		}
-		//no next function because it's the end of the end of middleware calls
-		//no chances of erros
-		print(result, method, terms, request, response);
+		//print the result of math
+		print(result, method, terms, response);
 	}
 }
-function welcome(req, res, next) {
+
+/**
+ * Will display an html page describing how to use this nodejs webapp
+ * @param {connect.IncomingMessage} req The incomming message from the server
+ * @param {ServerResponse} res The Server response to send back to the user
+ */
+function welcome(req, res) {
+	res.writeHead(200, 'Learn to use simple calculator');
+	//html page to display
 	const msg = `
 	<!DOCTYPE html>
 	<html>
@@ -150,24 +194,36 @@ function welcome(req, res, next) {
 		<hr />
 		<pre><p>Example: <code>${req.headers.host + req.url}?method=addition&x=100&=25</code></p></pre>
 		<p>This will add the variable x which is 100 and the unamed variable of value 25 together.</p>
-		<p>All acceptable methods are: ${Object.values(methods).map((val)=>val.name).flat().slice(0,-1).join(', ')}
+		<p>All acceptable methods are: ${Object.values(methods).map((val) => val.name).flat().slice(0, -1).join(', ')}
 	</body>
 	
 	</html>`;
 
-	res.end(msg,'utf-8');
+	res.end(msg, 'utf-8');
 }
+
+/**
+ * This will parse the url and determine to show home page or try to perform a math function
+ * @param {connect.IncomingMessage} req The incomming Server request
+ * @param {ServerResonse} res The Server response to be sent back to the user
+ * @param {connect.NextFunction} next The next function to execute in case of success or failure
+ * @returns void
+ */
 function parseUrl(req, res, next) {
-	let url = new URL(req.url,'http://'+req.headers.host);
+	//creates a URL object to easily identify they have an searchparams
+	let url = new URL(req.url, 'http://' + req.headers.host);
+	//if there are no search parameters display the home page
 	if(!url.searchParams.toString())
-		return welcome(req,res,next);
+		return welcome(req, res, next);
 	//gets each of the parameters from the url
 	let queryString = req.url.substring(req.url.indexOf('?') + 1).trim().split('&');
 	let params = queryString.filter((value) => value.includes('=', 0));
 	let operation = {method: ''};
+	//add operator the operation object then each subsequent search parameter variable
 	for(let i = 0; i < params.length; i++) {
 		//the name will be first element then the value
 		let elems = params[i].split('=');
+		//add property to the operation object
 		Object.defineProperty(operation, elems[0], {
 			//controls whether or not the property other than the value and writable can be edited or deleted
 			configurable: false,
@@ -177,18 +233,27 @@ function parseUrl(req, res, next) {
 			writable: true
 		});
 	}
+	//if the method is invalid, display error
 	if(!methods.findMethod(operation.method)) {
 		if(operation.method)
 			next(new Error('Method "' + operation.method + '" does not exist.'));
 		else
 			next(new Error('No math operator/method was entered'));
 	}
-	else
-		calculate(operation, req, res, next);
+	else //if the math operation method is valid, try to execute the math operation
+		calculate(operation, res, next);
 }
-
+/**
+ * This is used to handle any and all errors displaying them to the user
+ * @param {Error} error The error that occurred
+ * @param {connect.IncomingMessage} req The incomming Server request that caused the error
+ * @param {ServerResponse} res The respose to send back to the client of the error
+ * @param {connect.NextFunction} next The next function to execute after handling the error
+ */
 function err(error, req, res, next) {
+	//write in response header an error occured
 	res.writeHead(400, error.message);
+	//HTLML message of the error
 	const msg = `
 	<!DOCTYPE html>
 	<html>
@@ -212,12 +277,19 @@ function err(error, req, res, next) {
 	</body>
 	
 	</html>`;
-	res.write(msg, 'utf8');
-	res.end();
+	res.end(msg, 'utf8');
 }
 
+/**
+ * This is the main function that will power the simple calculator
+ * @param {connect.IncomingMessage} req The server request
+ * @param {ServerResponse} res The server response to the Server's request
+ * @param {connect.NextFunction} next The next function to execute
+ */
 function calculator(req, res, next) {
 	parseUrl(req, res, next);
 }
+
+//attaches the middleware to the server
 app.use(calculator);
 app.use(err);
