@@ -1,4 +1,5 @@
 const connect = require('connect');
+const url = require('url');
 /**
  * contains the name of each method the calculator can perform
  * and the associated symbol of such
@@ -211,28 +212,12 @@ function welcome(req, res) {
  */
 function parseUrl(req, res, next) {
 	//creates a URL object to easily identify they have an searchparams
-	let url = new URL(req.url, 'http://' + req.headers.host);
+	let urrl = new URL(req.url, 'http://' + req.headers.host);
 	//if there are no search parameters display the home page
-	if(!url.searchParams.toString())
+	if(!urrl.searchParams.toString())
 		return welcome(req, res, next);
 	//gets each of the parameters from the url
-	let queryString = req.url.substring(req.url.indexOf('?') + 1).trim().split('&');
-	let params = queryString.filter((value) => value.includes('=', 0));
-	let operation = {method: ''};
-	//add operator the operation object then each subsequent search parameter variable
-	for(let i = 0; i < params.length; i++) {
-		//the name will be first element then the value
-		let elems = params[i].split('=');
-		//add property to the operation object
-		Object.defineProperty(operation, elems[0], {
-			//controls whether or not the property other than the value and writable can be edited or deleted
-			configurable: false,
-			enumerable: true,
-			value: elems[1],
-			//if value of the property is editable/changeable
-			writable: true
-		});
-	}
+	let operation = url.parse(req.url, true).query;
 	//if the method is invalid, display error
 	if(!methods.findMethod(operation.method)) {
 		if(operation.method)
