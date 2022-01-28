@@ -3,25 +3,27 @@ const methods =
 {
 	'add': {
 		name: ['add', 'addition', 'plus'],
-		symbol: '+',
+		symbol: ' + ',
 	},
 	'subtract': {
 		name: ['subtract', 'minus'],
-		symbol: '-',
+		symbol: ' - ',
 	},
 	'multiply': {
 		name: ['multiply', 'times',],
-		symbol: '×',
+		symbol: ' × ',
 	},
 	'divide': {
 		name: ['divide',],
-		symbol: '÷'
+		symbol: ' ÷ '
 	}
 };
 let app = connect();
 app.listen(3000);
 function print(result, operation, terms, req, res) {
-	terms.forEach((value, index) => terms[index] = '<li><strong>' + String(value) + '</strong></li>');
+	terms = terms.map((value) => value = '<strong>' + String(value) + '</strong>');
+	let termsList = [];
+	terms.forEach((term) => termsList.push(`<li>${term}</li>`));
 	const msg = `
 	<!DOCTYPE html>
 	<html>
@@ -41,15 +43,16 @@ function print(result, operation, terms, req, res) {
 		<h2>Operation: <strong>${operation.toUpperCase()}</strong></h2>
 		<h2>Terms:</h2>
 		<ol>
-		${terms.join('\n')}
+			${termsList.join('\n')}
 		</ol>
 		<h2>Result: ${result}</h2>
 		<h2>Whole expression:</h2>
-		<p class="lead text-center">${terms.join(op)}</p>
+		<pre>
+			<p class="lead text-center">${terms.join(methods[operation].symbol)} = ${result}</p>
+		</pre>
 	</body>
 	
-	</html>
-	`;
+	</html>`;
 	res.end(msg, 'utf8');
 }
 function calculate(operation, request, response, next) {
@@ -101,18 +104,18 @@ function parseUrl(req, res, next) {
 			writable: true
 		});
 	}
-	var validMethodNames = [];
 	//gets value form methods object name and symbols
-	Object.values(methods)
+	var validMethodNames = Object.values(methods)
 		//creates an array from just the name properties
 		.map((value) => value.name)
-		//adds the names from each valid method to `validMethodNames` var
-		.forEach((value) => validMethodNames = validMethodNames.concat(value));
+		//adds the names from each sub array (of valid method names) to one unified array, to `validMethodNames` var
+		.flat();
 	if(!validMethodNames.includes(operation.method))
 		next(new Error('Method "' + operation.method + '" does not exist.'));
 	else
 		calculate(operation, req, res, next);
 }
+
 function err(error, req, res) {
 	console.log('uhjkvfg867\niuf\n');
 	res.writeHead(400, error.message);
