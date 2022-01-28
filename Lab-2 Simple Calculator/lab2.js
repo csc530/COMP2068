@@ -138,7 +138,8 @@ function welcome(req, res, next) {
 		<li><code><strong>&</strong></code>, this is required
 		<li><code>var-name=number&var-different-name=number</code></li>
 		<ul>
-			<li><code>var-name</code>, and subsequent var-name (including <code>var-different-name</code>), is optional and can be left blank.</li>
+			<li><code>var-name</code>, and subsequent var-name (including <code>var-different-name</code>), must be unique;
+			if one is left blank there can only be one blank var-name and if one is name 'p' there can only be one variable named 'p'.</li>
 			<li>The <code>=</code> is required.</li>
 			<li>the number following the equal sign is also required.</li>
 			<li>No space are allowed within the url.<small>Heavily advised against</small></li>
@@ -157,10 +158,11 @@ function welcome(req, res, next) {
 	res.end(msg,'utf-8');
 }
 function parseUrl(req, res, next) {
+	let url = new URL(req.url,'http://'+req.headers.host);
+	if(!url.searchParams.toString())
+		return welcome(req,res,next);
 	//gets each of the parameters from the url
 	let queryString = req.url.substring(req.url.indexOf('?') + 1).trim().split('&');
-	if(!req.url.includes('?')||queryString.every((val)=>!!val))
-		return welcome(req, res, next);
 	let params = queryString.filter((value) => value.includes('=', 0));
 	let operation = {method: ''};
 	for(let i = 0; i < params.length; i++) {
@@ -219,4 +221,3 @@ function calculator(req, res, next) {
 }
 app.use(calculator);
 app.use(err);
-//app.use((req, res, next)=>)
