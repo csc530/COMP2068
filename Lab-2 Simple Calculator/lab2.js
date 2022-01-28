@@ -23,7 +23,7 @@ app.listen(3000);
 function print(result, operation, terms, req, res) {
 	terms = terms.map((value) => value = '<strong>' + String(value) + '</strong>');
 	let termsList = [];
-	terms.forEach((term) => termsList.push(`<li>${term}</li>`));
+	terms.forEach((term) => termsList.push(`<li class="display-6 list-group-item" col-1>${term}</li>`));
 	const msg = `
 	<!DOCTYPE html>
 	<html>
@@ -39,16 +39,16 @@ function print(result, operation, terms, req, res) {
 	</head>
 	
 	<body class="container">
-		<h1>Simple Calculator</h1>
-		<h2>Operation: <strong>${operation.toUpperCase()}</strong></h2>
-		<h2>Terms:</h2>
-		<ol>
+		<h1 class="display-1">Simple Calculator</h1>
+		<h2 class="display-4">Operation: <strong>${operation.toUpperCase()}</strong></h2>
+		<h2 class="display-4">Terms: <small>(in order)</small></h2>
+		<ol class="list-group">
 			${termsList.join('\n')}
 		</ol>
-		<h2>Result: ${result}</h2>
-		<h2>Whole expression:</h2>
+		<h2 class="display-4">Result: ${result}</h2>
+		<h2 class="display-4">Whole expression:</h2>
 		<pre>
-			<p class="lead text-center">${terms.join(methods[operation].symbol)} = ${result}</p>
+			<p class="lead display-5 text-center">${terms.join(methods[operation].symbol)} = ${result}</p>
 		</pre>
 	</body>
 	
@@ -117,7 +117,6 @@ function parseUrl(req, res, next) {
 }
 
 function err(error, req, res) {
-	console.log('uhjkvfg867\niuf\n');
 	res.writeHead(400, error.message);
 	const msg = '<h1>Error</h1><p>' + error.message + '</p>';
 	res.write(msg, 'utf-8');
