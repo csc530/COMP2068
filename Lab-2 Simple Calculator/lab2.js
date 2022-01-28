@@ -17,11 +17,11 @@ const methods =
 		name: ['divide',],
 		symbol: ' ÷ '
 	},
-	findMethod: function(val){
+	findMethod: function (val) {
 		let keys = Object.keys(this);
 		let names = Object.values(this)
-			.map((val)=>val.name)
-			.slice(0,-1);
+			.map((val) => val.name)
+			.slice(0, -1);
 		for(let i = 0; i < names.length; i++) {
 			for(let j = 0; j < names[i].length; j++) {
 				const name = names[i][j];
@@ -75,31 +75,47 @@ function calculate(operation, request, response, next) {
 	const terms = Object.values(operation).slice(1).map(Number);
 	let result = Number(0);
 	if(terms.length < 2)
-		next(Error('2 arguments are required\nNot enough arguments to perform valid math operations'));
-	switch(method) {
-	case'add':
-		for(let i = 0; i < terms.length; i++)
-			result += terms[i];
-		break;
-	case'subtract':
-		result = terms[0];
-		for(let i = 1; i < terms.length; i++)
-			result -= terms[i]; break;
-	case'multiply':
-		result = terms[0];
-		terms.slice(1).forEach((value) => result *= value);
-		break;
-	case'divide':
-		result = terms[0];
-		terms.slice(1).forEach((value) => result /= value);
-		break;
-	default:
-		next(new Error('Invalid method'));
-		break;
-	}
-	//no next function because it's the end of the end of middleware calls
-	//no chances of erros
-	print(result, method, terms, request, response);
+		next(Error('2 arguments are required. Not enough arguments to perform valid math operations'));
+	else
+		switch(method) {
+		case'add':
+			for(let i = 0; i < terms.length; i++)
+				result += terms[i];
+				//no next function because it's the end of the end of middleware calls
+				//no chances of erros
+			print(result, method, terms, request, response);
+			break;
+		case'subtract':
+			result = terms[0];
+			for(let i = 1; i < terms.length; i++)
+				result -= terms[i];
+				//no next function because it's the end of the end of middleware calls
+				//no chances of erros
+			print(result, method, terms, request, response);
+			break;
+		case'multiply':
+			result = terms[0];
+			terms.slice(1).forEach((value) => result *= value);
+			//no next function because it's the end of the end of middleware calls
+			//no chances of erros
+			print(result, method, terms, request, response);
+
+			break;
+		case'divide':
+			result = terms[0];
+			if(terms.slice(1).includes(0))
+				next(Error('Dividing by zero is not allowed'));
+			else{
+				terms.slice(1).forEach((value) => result /= value);
+				//no next function because it's the end of the end of middleware calls
+				//no chances of erros
+				print(result, method, terms, request, response);
+			}
+			break;
+		default:
+			next(new Error('Invalid method'));
+			break;
+		}
 }
 function parseUrl(req, res, next) {
 	//gets each of the parameters from the url
@@ -118,8 +134,12 @@ function parseUrl(req, res, next) {
 			writable: true
 		});
 	}
-	if(!methods.findMethod(operation.method))
-		next(new Error('Method "' + operation.method + '" does not exist.'));
+	if(!methods.findMethod(operation.method)) {
+		if(operation.method)
+			next(new Error('Method "' + operation.method + '" does not exist.'));
+		else
+			next(new Error('No math operator/method was entered'));
+	}
 	else
 		calculate(operation, req, res, next);
 }
@@ -142,7 +162,8 @@ function err(error, req, res, next) {
 	
 	<body class="container">
 		<h1 class="display-1">Error⚠</h1>
-		<p class="lead display-5 text-center">${error.message}</p>
+		<h2 class="lead display-5 text-center">${error.message}</h2>
+		<p class="lead display-6">Please review your url query and try again.</p>
 		<hr />
 		<details class="display-6">${error.stack}</details>
 	</body>
@@ -153,7 +174,7 @@ function err(error, req, res, next) {
 }
 
 function calculator(req, res, next) {
-	parseUrl(req,res,next);
+	parseUrl(req, res, next);
 }
 app.use(calculator);
 app.use(err);
