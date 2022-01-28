@@ -21,10 +21,10 @@
         ],
         "no-useless-return": "error",
         //"brace-style": [1,"allman", { "allowSingleLine": true }],
-        "space-after-keywords": [
-            "error",
-            "never"
-        ],
+        //dep "space-after-keywords": [
+        //     "error",
+        //     "never"
+        // ],
         
         //nodeJS-user-style guide formatting settings
         //Got rid of stylitic choices I just could not stand
@@ -73,7 +73,8 @@
             "avoid-escape"
         ],
         //dup: "semi": [2, "always"],
-        // "keyword-spacing": [2, {"before": true, "after": true}],
+        //I changed it to false for after #preferences
+        "keyword-spacing": [2, {"before": true, "after": false}],
         "space-unary-ops": 2
     }
 }

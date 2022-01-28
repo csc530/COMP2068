@@ -1,5 +1,23 @@
 const connect = require('connect');
-
+const methods =
+{
+	'add': {
+		name: ['add', 'addition', 'plus'],
+		symbol: '+',
+	},
+	'subtract': {
+		name: ['subtract', 'minus'],
+		symbol: '-',
+	},
+	'multiply': {
+		name: ['multiply', 'times',],
+		symbol: '×',
+	},
+	'divide': {
+		name: ['divide',],
+		symbol: '÷'
+	}
+};
 let app = connect();
 app.listen(3000);
 function print(result, operation, terms, req, res) {
@@ -39,22 +57,22 @@ function calculate(operation, request, response, next) {
 	//converts array (elements) to Number (type)
 	const terms = Object.values(operation).slice(1).map(Number);
 	let result = Number(0);
-	if (terms.length < 2)
+	if(terms.length < 2)
 		next(Error('2 arguments are required\nNot enough arguments to perform valid math operations'));
-	switch (method) {
-	case 'add':
-		for (let i = 0; i < terms.length; i++)
+	switch(method) {
+	case'add':
+		for(let i = 0; i < terms.length; i++)
 			result += terms[i];
 		break;
-	case 'subtract':
+	case'subtract':
 		result = terms[0];
-		for (let i = 1; i < terms.length; i++)
+		for(let i = 1; i < terms.length; i++)
 			result += terms[i]; break;
-	case 'multiply':
+	case'multiply':
 		result = terms[0];
 		terms.slice(1).forEach((value) => result *= value);
 		break;
-	case 'divide':
+	case'divide':
 		result = terms[0];
 		terms.slice(1).forEach((value) => result /= value);
 		break;
@@ -70,9 +88,8 @@ function parseUrl(req, res, next) {
 	//gets each of the parameters from the url
 	let queryString = req.url.substring(req.url.indexOf('?') + 1).split('&');
 	let params = queryString.filter((value) => value.includes('=', 0));
-
 	let operation = {method: ''};
-	for (let i = 0; i < params.length; i++) {
+	for(let i = 0; i < params.length; i++) {
 		//the name will be first element then the value
 		let elems = params[i].split('=');
 		Object.defineProperty(operation, elems[0], {
@@ -84,17 +101,24 @@ function parseUrl(req, res, next) {
 			writable: true
 		});
 	}
-
-	if (!methods.includes(operation.method))
+	var validMethodNames = [];
+	//gets value form methods object name and symbols
+	Object.values(methods)
+		//creates an array from just the name properties
+		.map((value) => value.name)
+		//adds the names from each valid method to `validMethodNames` var
+		.forEach((value) => validMethodNames = validMethodNames.concat(value));
+	if(!validMethodNames.includes(operation.method))
 		next(new Error('Method "' + operation.method + '" does not exist.'));
 	else
 		calculate(operation, req, res, next);
 }
-function err(error, req, res, next) {
+function err(error, req, res) {
+	console.log('uhjkvfg867\niuf\n');
 	res.writeHead(400, error.message);
 	const msg = '<h1>Error</h1><p>' + error.message + '</p>';
 	res.write(msg, 'utf-8');
-	next();
+	res.end();
 }
 
 
