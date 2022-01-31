@@ -46,7 +46,7 @@ const methods =
 //creates the app
 let app = connect();
 //docks app to port 300
-app.listen(3000);
+let server = app.listen(3000);
 
 /**
  * This will print an html page of the completed math function to the ServerResponse object
@@ -276,5 +276,7 @@ function calculator(req, res, next) {
 }
 
 //attaches the middleware to the server
-app.use(calculator);
+app.use('/lab2',calculator);
+app.use(welcome);
 app.use(err);
+console.log('Program running on: http://localhost:'+server.address().port);
