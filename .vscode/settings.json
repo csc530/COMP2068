@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "main",
-        "lab2"
+        "lab2",
+        "lab3"
     ]
 }
