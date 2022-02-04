@@ -12,5 +12,26 @@
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1"
-  }
+  },
+  "description": "A simple website giving information on my (immidiate) family members",
+  "main": "./bin/www",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc530/COMP2068.git"
+  },
+  "keywords": [
+    "Express",
+    "Node",
+    "JavaScript",
+    "Website",
+    "Family",
+    "family-members",
+    "Handlebars"
+  ],
+  "author": "Christofer Cousins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csc530/COMP2068/issues"
+  },
+  "homepage": "https://github.com/csc530/COMP2068#readme"
 }

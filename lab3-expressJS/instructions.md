@@ -7,7 +7,7 @@ In this lab you will use the Express Generator to create a simple web site.
 - Use the Express Generator to create a new site called lab3
 - Create a new ejs template for each member of your nuclear family (you, each parent, each sibling)
 - Create a shared header that has a link with the name of each family member including yourself (e.g. Ethel | Harold | Paul | Rich )
-- Each link loads a page with the name of that person (e.g. <http://localhost:3000/ethel>) 
+- Each link loads a page with the name of that person (e.g. <http://localhost:3000/ethel>)
 - Each page shares the same header.ejs file
 - Add routing to your routes/index.js file so each link loads the ejs template containing some information about the selected family member.  For example:
 
