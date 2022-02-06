@@ -1,2 +1,39 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<section>
+    <figure>
+        <img src="{{student.img}}" />
+        <figcaption>
+            <h2>{{student.title}}</h2>
+            <p>{{student.txt}}</p>
+        </figcaption>
+    </figure>
+</section>
+<section>
+    <figure>
+        <img src="{{developer.img}}" />
+        <figcaption>
+            <h2>{{developer.title}}</h2>
+            <p>{{developer.txt}}</p>
+        </figcaption>
+    </figure>
+</section>
+<section>
+    <figure>
+        <img src="{{photo.img}}" />
+        <figcaption>{{photo.txt}}</figcaption>
+    </figure>
+</section>
+<section>
+    <figure>
+        <img src="{{project.img}}" />
+        <figcaption>
+            <h2>Projects</h2>
+            <ul>
+                {{#each project.items}}
+                <li>
+                    {{this}}
+                </li>
+                {{/each}}
+            </ul>
+        </figcaption>
+    </figure>
+</section>
