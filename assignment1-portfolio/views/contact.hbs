@@ -1,0 +1,17 @@
+<form action="/email" method="post">
+<fieldset>
+    <legend>Email me: </legend>
+    <label for="fName">First Name:
+        <input type="text" placeholder="{{placeholder.fName}}" autocomplete="given-name" name="firstName"
+            aria-autocomplete="inline" id="fName" />
+    </label>
+    <label for="lName">Last Name:
+        <input type="text" placeholder="{{placeholder.lName}}" aria-autocomplete="inline" autocomplete="family-name" name="lastName" id="lName" />
+    </label>
+    </fieldset>
+    <fieldset>
+        <legend>Message: </legend>
+        <textarea name="msg" placeholder="{{placeholder.msg}}" required wrap="soft" spellcheck="true"></textarea>
+    </fieldset>
+    <input type="submit" value="Send" class="btn btn-primary" name="submit"/>
+</form>
