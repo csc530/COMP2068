@@ -35,32 +35,39 @@
     <footer class="text-center">
       <ul class="list-group list-group-horizontal  row justify-content-center">
         <ul class="list-group col-3">
-          <li class="list-group-item">About the site</li>
-          <li class="list-group-item">A blurb yadda yadda blah</li>
+          <li class="list-group-item">
+About the site</li>
+          <li class="list-group-item">Welcome! I , Christofer Cousins, made the this website for potential employers to see a display of my skiils.I hope you enjoy my website feel free to browse and learn more about me.</li>
           <li class="list-group-item">contact images below</li>
           <li class="list-group-item">A fourth item</li>
           <li class="list-group-item">And a fifth one</li>
         </ul>
         <ul class="list-group col-3">
           <li class="list-group-item">Categories/Browse</li>
-          <li class="list-group-item">link to each page on website</li>
-          <li class="list-group-item">contact images below</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
+          <li class="list-group-item"><a href="/">Home</a></li>
+          <li class="list-group-item"><a href="about">About me</a></li>
+          <li class="list-group-item"><a href="/contact.hbs">Contact me</a></li>
+          <li class="list-group-item"><a class="link" href="https://github.com/csc530/COMP2068/tree/master/assignment1-portfolio" target="_blank">View source</a></li>
         </ul>
         <ul class="list-group col-3">
           <li class="list-group-item">Credits</li>
           <li class="list-group-item">link or reference to each</li>
-          <li class="list-group-item">resource I used to make</li>
-          <li class="list-group-item">the site</li>
-          <li class="list-group-item">And a fifth one</li>
         </ul>
         <ul class="list-group col-3">
           <li class="list-group-item">Small</li>
           <li class="list-group-item">form to caprture</li>
           <li class="list-group-item">contact request</li>
           <li class="list-group-item">submit button</li>
-          <li class="list-group-item">And a fifth one</li>
+          <li class="list-group-item">
+            <form method="POST" action="contact">
+              <legend>Email me!</legend>
+              <label for="from"> Your email address: 
+                <input type="email" name="from" value="" spellcheck="true" required/>
+              </label>           
+              <label>
+                <textarea name="msg" wrap="soft" required placeholder="Feel free to email job offers, requests, or further insight into my projects or skills."></textarea>"
+              </label>
+          </form></li>
         </ul>
       </ul>
     </footer>
