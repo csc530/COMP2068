@@ -1,8 +1,30 @@
 body {
   padding: 50px;
+  display: block;
+  height: 100vh;
+  width: 100vw;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: linear-gradient(rgb(233, 138, 138), rgba(182, 182, 83, 0.1));
+  background-repeat: no-repeat;
+  background-clip: content-box;
 }
 
 a {
   color: #00B7FF;
+}
+
+footer > ul li {
+  list-style: none;
+}
+main + footer.list-group {
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  border-spacing: 10rem;
+  bottom: 5vh;
+  padding-right: 5vw;
+  padding-left: 5vw;
+}
+footer legend {
+  display: inline
 }
