@@ -3,11 +3,11 @@ var router = express.Router();
 
 /* GET users listing. */
 const options = {
-  title: 'About me',
+	title: 'About me',
 };
 
-router.get('/', function(req, res, next) {
-  res.render('/about', options);
+router.get('/', function (req, res, next) {
+	res.render('about', options);
 });
 
 module.exports = router;

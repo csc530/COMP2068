@@ -1,5 +1,13 @@
-<ul>
-    {{#each projects.project as |project|}}
-        <li>{{project.name}}</li>
-    {{/each}}
-</ul>
+<h1>My projects</h1>
+{{#each projects as |project|}}
+<article>
+    <h2>{{project.name}}</h2>
+    <figure>
+        <img src="{{project.image}}" />
+        <figcaption>{{project.status}}</figcaption>
+    </figure>
+    <p>{{project.description}}</p>
+</article>
+<wbr/>
+<p>And more coming soon!</p>
+{{/each}}

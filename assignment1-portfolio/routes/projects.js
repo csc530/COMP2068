@@ -3,11 +3,17 @@ var router = express.Router();
 
 /* GET users listing. */
 const options = {
-  title: 'My p[rojects',
+	projects: [
+		{
+			title: 'title',
+			description: 'some stuff about a proejct yadda yada blahblue bahebeh ghertyahg yragh',
+			img: 'https://github.com/favicon.ico',
+		},
+	],
 };
 
-router.get('/', function(req, res, next) {
-  res.send('/project', options);
+router.get('/', function (req, res, next) {
+	res.render('projects', options);
 });
 
 module.exports = router;
