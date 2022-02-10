@@ -16,12 +16,12 @@ router.get('/', function (req, res, next) {
 			title: 'Projects',
 			txt: 'txt',
 			items: [],
-			img: ''
+			img: 'Kaya,_Bane_of_the_Dead.jpg'
 		},
 		photo: {
 			title: 'Photo',
 			alt: 'Photo',
-			src: ''
+			src: 'Kaya,_Bane_of_the_Dead.jpg'
 		},
 	};
 	res.render('index', options);
