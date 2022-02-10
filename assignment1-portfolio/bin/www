@@ -91,4 +91,4 @@ function onListening() {
 
 
 // Custom log message
-console.log(`App running at https://127.0.0.1:${server.address().port}`);
+console.log(`App running at http://127.0.0.1:${server.address().port}`);
