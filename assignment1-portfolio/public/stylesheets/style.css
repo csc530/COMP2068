@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;1,300&display=swap');
 body {
-	font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
-	background-image: linear-gradient(var(--quinary), rgba(255, 255, 255, 1), top);
+	font: 25px 'Lucida Grande', Helvetica, Arial, sans-serif;
+	font-family: 'Source Sans Pro', sans-serif;
+	/* background-image: linear-gradient(var(--quinary), rgba(255, 255, 255, 1), top); */
 	background-repeat: repeat-x;
 	background-clip: border-box;
 	margin: 0px;
@@ -8,6 +10,7 @@ body {
 	position: relative;
 	min-height: 100vh;
 	background-color: var(--quinary);
+	background-color: white;
 	width: 100%;
 	/* overflow: hidden; */
 }
@@ -24,16 +27,19 @@ main {
 	padding-bottom: 500px;
 }
 nav {
+	position: sticky;
+	top: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	align-content: space-between;
-	/* overflow: hidden; */
+	background-color: #0000000e;
 	gap: 0 20px;
 }
 h1 {
 	text-transform: uppercase;
 	text-align: center;
+	font-size: small;
 }
 a {
 	color: #00b7ff;
@@ -68,31 +74,61 @@ main > div.splash-page-contents > div.splash-items-row {
 	display: flex;
 	justify-content: space-around;
 	flex-flow: row wrap;
-	align-items: center;
+	align-items: stretch;
 	align-content: space-around;
+	width: 100%;
+	
 }
 main > div.splash-page-contents > div.splash-items-row > section {
-	flex-basis: 1;
+	/* flex-grow: 20; */
 	border: 5px solid rgba(0, 0, 0, 0.21);
 	border-radius: 14px;
+	width: 35%;
+	padding: 21px;
 }
 main > div.splash-page-contents > div.splash-items-row > section:last-child {
-	width: 100%;
+	width: 85%;
 	margin-top: 15px;
+	box-sizing: border-box;
+	/* flex-grow: 1; */
+}
+
+main > div.splash-page-contents > div.splash-items-row > section:last-child>figure {
+	display: flex;
+	width: 100%;
+	flex-flow: row wrap;
+	justify-content: space-evenly;
+}
+
+main > div.splash-page-contents > div.splash-items-row > section:last-child>figure img{
+	width: 50%;
 }
 /* Place photo next to content */
 main > div.splash-page-contents {
 	display: flex;
 	flex-flow: row wrap;
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap-reverse;
+	justify-content: space-evenly;
 }
-main > div.splash-items-row + section {
-	float: right;
-	height: 100%;
+main > div.splash-page-contents>div.splash-items-row + section {
+	/* height: 100%; */
+	width: 100%;
+	flex-grow: 1;
+}
+/* pfp */
+main > div.splash-page-contents>div.splash-items-row + section img {
+	width: 30%;
+	height: 10%;
 }
 /* #endregion */
 /* #region images*/
 main > div.splash-page-contents section img{
-	width: min-content;
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
 	border-radius: 14px;
 	border-color: var(--tertiary);
 	border-width: 8px;
@@ -103,6 +139,8 @@ main > div.splash-page-contents section img{
 }
 /* #endregion */
 /* #endregion */
+
+
 /* #region Footer*/
 /* Footer styles  */
 /* Thanks to Marc Hinton for the Inspirations https://www.youtube.com/watch?v=KUHrMzN7ey8 */
@@ -110,7 +148,7 @@ main + footer {
 	box-sizing: border-box;
 	min-width: 100%;
 	width: 100%;
-	height: fit-content;
+	font-size: 1.1rem;
 	max-height: 500px;
 	display: flex;
 	position: absolute;
@@ -131,6 +169,8 @@ footer > section > ul > li {
 footer > section {
 	width: 23.5%;
 	float: left;
+	height: 100%;
+	flex-grow: 1;
 }
 footer > section > h3 {
 	display: block;

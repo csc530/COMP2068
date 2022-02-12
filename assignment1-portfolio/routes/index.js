@@ -29,7 +29,7 @@ router.get('/', async function (req, res) {
 		photo: {
 			title: 'A picture of me😃',
 			alt: 'A photo of me',
-			src: 'chris.png',
+			src: 'portrait.jpg',
 		},
 	};
 	res.render('index', options);

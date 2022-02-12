@@ -1,45 +1,54 @@
-<div class="splash-page-contents">
-    <div class="splash-items-row">
+<div class='splash-page-contents'>
+    <div class='splash-items-row'>
+
         <section>
             <figure>
-                <img src="images/{{student.img}}" />
+                <img src='images/{{student.img}}' />
                 <figcaption>
-                    <h2>{{student.title}}</h2>
-                    <p>{{student.txt}}</p>
+                    <h2>{{student.title}}
+                        <i class='fa-solid fa-graduation-cap'></i>
+                    </h2>
+                    <p class='lead'>{{student.txt}}</p>
                 </figcaption>
             </figure>
         </section>
+
         <section>
             <figure>
-                <img src="images/{{developer.img}}" />
+                <img src='images/{{developer.img}}' />
                 <figcaption>
-                    <h2>{{developer.title}}</h2>
-                    <p>{{developer.txt}}</p>
+                    <h2>{{developer.title}}
+                        <i class='fa-solid fa-laptop-code'></i>
+                    </h2>
+                    <p class='lead'>{{developer.txt}}</p>
                 </figcaption>
             </figure>
         </section>
+
         <section>
             <figure>
                 <figcaption>
-                    <h2>Projects</h2>
+                    <h2>Projects
+                        <i class='fa-solid fa-cubes'></i>
+                    </h2>
                     <ul>
                         {{#each project.items}}
-                        <li>
-                            <a href="{{this.link}}">{{this.name}}</a></li>
+                        <li class='lead'>
+                            <a class='link' href='{{this.link}}'>{{this.name}}</a>
                         </li>
                         {{/each}}
+                        <li>More coming soon...</li>
                     </ul>
-                    <a href="https://github.com/csc530" target="_blank">My github</a>
+                    <a href='https://github.com/csc530' target='_blank'><i class='fa-brands fa-github'></i>My github</a>
                 </figcaption>
-                <img src="images/{{project.img}}" />
+                <img src='images/{{project.img}}' />
             </figure>
         </section>
     </div>
 
-
     <section>
         <figure>
-            <img src="images/{{photo.src}}" />
+            <img src='images/{{photo.src}}' />
             <figcaption>{{photo.txt}}</figcaption>
         </figure>
     </section>
