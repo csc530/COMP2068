@@ -21,6 +21,7 @@ main {
 	height: 100%;
 	max-width: 100vw;
 	width: 100%;
+	padding-bottom: 500px;
 }
 nav {
 	display: flex;
@@ -62,7 +63,7 @@ a {
 /* #endregion */
 
 /* #region Splash page*/
-/* Splash page ordering cards */
+/*#region Splash page ordering cards */
 main > div.splash-page-contents > div.splash-items-row {
 	display: flex;
 	justify-content: space-around;
@@ -89,7 +90,19 @@ main > div.splash-items-row + section {
 	height: 100%;
 }
 /* #endregion */
-
+/* #region images*/
+main > div.splash-page-contents section img{
+	width: min-content;
+	border-radius: 14px;
+	border-color: var(--tertiary);
+	border-width: 8px;
+	text-align:center;
+	align-self: center;
+	max-width: 50rem;
+	height: 100%;
+}
+/* #endregion */
+/* #endregion */
 /* #region Footer*/
 /* Footer styles  */
 /* Thanks to Marc Hinton for the Inspirations https://www.youtube.com/watch?v=KUHrMzN7ey8 */
@@ -98,6 +111,7 @@ main + footer {
 	min-width: 100%;
 	width: 100%;
 	height: fit-content;
+	max-height: 500px;
 	display: flex;
 	position: absolute;
 	bottom: 0;
