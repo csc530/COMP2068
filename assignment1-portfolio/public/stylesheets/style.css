@@ -24,7 +24,7 @@ h1, h2, h3, h4, h5, h6 {
 main {
 	/* overflow: hidden; */
 	box-sizing: border-box;
-	padding: 8px;
+	padding: 80px;
 	height: 100%;
 	max-width: 100vw;
 	width: 100%;
@@ -83,12 +83,14 @@ main section.splash-page-contents {
 	align-items: center;
 	justify-content: center;
 	align-content: center;
-	border-bottom: thin outset  var(--quinary);
+	border-bottom: 3px solid black;
+	border-top: 0px none  transparent;
+	border-radius: 14px;
 	text-transform: capitalize;
 	padding: 15px;
-	column-gap: 15px;
+	column-gap: 45px;
 	background-color: black;
-	background-image: linear-gradient(white,var(--quinary), var(--quinary), rgb(112, 0, 0));
+	background-image: linear-gradient(white,var(--quinary), var(--quinary), rgb(179, 6, 6));
 }
 
 main section.splash-page-contents div {
@@ -98,11 +100,11 @@ main section.splash-page-contents div {
 }
 
 main section.splash-page-contents div h2 {
-	font-size: 4em;
+	font-size: 3.5em;
 	text-transform: uppercase;
 	text-align: center;
-	font-weight: bold;
-	color: var(--secondary);
+	/* font-weight: bold; */
+	color: black;
 }
 
 main section.splash-page-contents div button:hover {
@@ -223,7 +225,8 @@ footer>section {
 	width: 23.5%;
 	float: left;
 	height: 100%;
-	flex-grow: 1;
+	/* flex-grow: 1; */
+	height: 100%;
 }
 
 footer>section>h3 {
