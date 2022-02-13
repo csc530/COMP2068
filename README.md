@@ -13,5 +13,7 @@ A repo to hold projects, labs, and assignments for COMP2068 working with the MEA
 
 3. Assignment: [portfolio website](https://github.com/csc530/COMP2068/assignment1-portfolio/)
    - [Prototypes website](https://csc530.github.io/COMP2068/assignment1-portfolio/docs/portfolio-prototype/index.html)
-   - [Production site](nttps://)
+   - [Production site](https://csc530-portfolio.herokuapp.com)
+   - [Production repository](https://github.com/csc530/portfolio-website)
+     - Please be mindful of git commit history will not be totally in sync with what is found in this repository
 4. Lab: [Express website](/lab3-expressJS/)
