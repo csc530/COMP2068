@@ -76,14 +76,15 @@ main > div.splash-page-contents > div.splash-items-row {
 	flex-flow: row wrap;
 	align-items: stretch;
 	align-content: space-around;
-	width: 100%;
+	row-gap: 45px;
+	padding: 25px
 	
 }
 main > div.splash-page-contents > div.splash-items-row > section {
 	/* flex-grow: 20; */
 	border: 5px solid rgba(0, 0, 0, 0.21);
 	border-radius: 14px;
-	width: 35%;
+	width: 33%;
 	padding: 21px;
 }
 main > div.splash-page-contents > div.splash-items-row > section:last-child {
@@ -103,24 +104,24 @@ main > div.splash-page-contents > div.splash-items-row > section:last-child>figu
 main > div.splash-page-contents > div.splash-items-row > section:last-child>figure img{
 	width: 50%;
 }
-/* Place photo next to content */
-main > div.splash-page-contents {
-	display: flex;
-	flex-flow: row wrap;
-	width: 100%;
-	display: flex;
-	flex-flow: row wrap-reverse;
-	justify-content: space-evenly;
+/* #region Crop pfp */
+main > div.splash-page-contents > div.splash-items-row > section#pfp-section{
+	border: 0px none transparent;
+	padding: 0px;
+	/* flex-grow: 1; */
+	align-self: center;
+	margin: 0px;
 }
-main > div.splash-page-contents>div.splash-items-row + section {
-	/* height: 100%; */
+
+main > div.splash-page-contents > div.splash-items-row > section#pfp-section figure{
+	display: block;
 	width: 100%;
-	flex-grow: 1;
 }
-/* pfp */
-main > div.splash-page-contents>div.splash-items-row + section img {
-	width: 30%;
-	height: 10%;
+main > div.splash-page-contents > div.splash-items-row > section#pfp-section img#pfp-image {
+	/* width: 50%; */
+	/* min-height: 100%; */
+	height: 100%;
+	width: 100%;
 }
 /* #endregion */
 /* #region images*/
