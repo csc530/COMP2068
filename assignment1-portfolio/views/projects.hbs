@@ -1,13 +1,25 @@
 <h1>My projects</h1>
-{{#each projects as |project|}}
-<article>
-    <h2>{{project.name}}</h2>
-    <figure>
-        <img src="{{project.image}}" />
-        <figcaption>{{project.status}}</figcaption>
-    </figure>
-    <p>{{project.description}}</p>
-</article>
+<h3>Below is a list of all my projects which I'm working on. Please feel free to look them over. Enjoy!</h3>
+<div class="accordion" id="accordion">
+    {{#each projects as |project|}}
+    <article>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{project.index}}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse{{project.index}}" aria-expanded="false" aria-controls="collapseOne">
+                    {{project.title}}—<em>{{project.lang}} - {{project.status}}</em>
+                </button>
+            </h2>
+            <div id="collapse{{project.index}}" class="accordion-collapse collapse hide"
+                aria-labelledby="heading{{project.index}}" data-bs-parent="#accordion">
+                <div class="accordion-body">
+                    <p>{{project.description}}</p>
+                    <img src="{{project.img }}" />
+                </div>
+            </div>
+        </div>
+    </article>
+    {{/each}}
+</div>
 <wbr/>
-<p>And more coming soon!</p>
-{{/each}}
+<h2 class="">And more coming soon!</h2>
