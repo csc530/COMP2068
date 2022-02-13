@@ -184,6 +184,10 @@ main div.splash-items-row section img {
 /* #endregion */
 /* #endregion */
 
+main form textarea#floatingTextarea {
+	height: 160px;
+}
+
 /* #region Footer*/
 /* Footer styles  */
 /* Thanks to Marc Hinton for the Inspirations https://www.youtube.com/watch?v=KUHrMzN7ey8 */
