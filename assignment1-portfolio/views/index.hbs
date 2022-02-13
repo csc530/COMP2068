@@ -1,7 +1,17 @@
-<div class='splash-page-contents'>
-	<div class='splash-items-row'>
-
-		<section>
+<section class='splash-page-contents'>
+	<div>
+		<p>Hi I'm</p>
+		<h2>Christofer Cousins</h2>
+		<hr />
+		<h3>2<sup>nd</sup> year Computer Science Student</h3>
+		<h3>Brampton, Canada</h3>
+		<button class="btn btn-primary btn-lg">Contact me</button>
+	</div>
+		<img src='images/{{photo.src}}' id='pfp' />
+</section>
+<div class='splash-items-row'>
+	<section>
+		<a href="{{student.link}}">
 			<figure>
 				<img src='images/{{student.img}}' />
 				<figcaption>
@@ -11,16 +21,10 @@
 					<p class='lead'>{{student.txt}}</p>
 				</figcaption>
 			</figure>
-		</section>
-
-		<section id='pfp-section'>
-			<figure>
-				<img src='images/{{photo.src}}' id='pfp' />
-				<figcaption>{{photo.txt}}</figcaption>
-			</figure>
-		</section>
-
-		<section>
+		</a>
+	</section>
+	<section>
+		<a href="{{developper.link}}">
 			<figure>
 				<img src='images/{{developer.img}}' />
 				<figcaption>
@@ -30,26 +34,26 @@
 					<p class='lead'>{{developer.txt}}</p>
 				</figcaption>
 			</figure>
-		</section>
+		</a>
+	</section>
 
-		<section>
-			<figure>
-				<figcaption>
-					<h2>Projects
-						<i class='fa-solid fa-cubes'></i>
-					</h2>
-					<ul>
-						{{#each project.items}}
-							<li class='lead'>
-								<a class='link' href='{{this.link}}'>{{this.name}}</a>
-							</li>
-						{{/each}}
-						<li>More coming soon...</li>
-					</ul>
-					<a href='https://github.com/csc530' target='_blank'><i class='fa-brands fa-github'></i>My github</a>
-				</figcaption>
-				<img src='images/{{project.img}}' />
-			</figure>
-		</section>
-	</div>
+	<section>
+		<figure>
+			<figcaption>
+				<h2>Projects
+					<i class='fa-solid fa-cubes'></i>
+				</h2>
+				<ul>
+					{{#each project.items}}
+					<li class='lead'>
+						<a class='link' href='{{this.link}}'>{{this.name}}</a>
+					</li>
+					{{/each}}
+					<li>More coming soon...</li>
+				</ul>
+				<a href='https://github.com/csc530' target='_blank'><i class='fa-brands fa-github'></i>My github</a>
+			</figcaption>
+			<img src='images/{{project.img}}' />
+		</figure>
+	</section>
 </div>
