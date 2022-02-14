@@ -13,9 +13,9 @@ router.get('/', function (req, res, next) {
 	res.render('contact', options);
 });
 router.post('/', function (req, res, next) {
-	const{fName, lName, email, msg, subject} = req.body;
-	const name =
-	(fName && lName) ? fName.toLocaleUpperCase()[0] + fName.slice(1).toLocaleLowerCase() + lName.toLocaleUpperCase()[0] + lName.slice(1).toLocaleLowerCase() : 'Anonymous Null';
+	let{fName, lName, email, msg, subject} = req.body;
+	const name ='From: '+ (fName && lName) ? fName.toLocaleUpperCase()[0] + fName.slice(1).toLocaleLowerCase() + lName.toLocaleUpperCase()[0] + lName.slice(1).toLocaleLowerCase() : 'Anony Mous';
+	if(!subject) subject = 'No subject';
 	const senderEmail = process.env.SENDEREMAIL;
 	const myEmail = process.env.MYEMAIL;
 	const pss = process.env.PSS;
