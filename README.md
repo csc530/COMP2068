@@ -16,4 +16,5 @@ A repo to hold projects, labs, and assignments for COMP2068 working with the MEA
    - [Production site](https://csc530-portfolio.herokuapp.com)
    - [Production repository](https://github.com/csc530/portfolio-website)
      - Please be mindful of git commit history will not be totally in sync with what is found in this repository
-4. Lab: [Express website](/lab3-expressJS/)
+4. Lab: [My family website](/lab3-expressJS/)
+   1. An express generated website using EJS view engine (instead HBS [handlebars])
