@@ -13,7 +13,7 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1"
   },
-  "description": "A simple website giving information on my (immidiate) family members",
+  "description": "A simple website giving information on my (immediate) family members",
   "main": "./bin/www",
   "repository": {
     "type": "git",
