@@ -4,6 +4,7 @@ A repo to hold projects, labs, and assignments for COMP2068 working with the MEA
 
 - [COMP2068](#comp2068)
   - [Labs and Assignments](#labs-and-assignments)
+- [- An express generated website using EJS view engine (instead HBS [handlebars])](#an-express-generated-website-using-ejs-view-engine-instead-hbs-handlebars)
 
 ## Labs and Assignments
 
@@ -17,4 +18,8 @@ A repo to hold projects, labs, and assignments for COMP2068 working with the MEA
    - [Production repository](https://github.com/csc530/portfolio-website)
      - Please be mindful of git commit history will not be totally in sync with what is found in this repository
 4. Lab: [My family website](/lab3-expressJS/)
+<<<<<<< HEAD
    - An express generated website using EJS view engine (instead HBS [handlebars])
+=======
+   -. An express generated website using EJS view engine (instead HBS [handlebars])
+>>>>>>> e636f51d66d7556f8b9b13c10a49167f4bf1aa8c
