@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include('./layout/header.ejs') -%>
+<main>
+	<article>
+		<h1 class="title"><%= title %></h1>
+		<p>Welcome to <%= title %></p>
+		<p>This site will give a brief showcase about my amazing family</p>
+		<p>This site was created to complete <em>lab 3 of COMP2068</em>.</p>
+	</article>
+	<section>
+		<h2>Lab 3 instructions</h2>
+		<p>The instructions for this lab were as follows</p>
+		<section>
+			<pre><%- include('./../instructions.md') -%></pre>
+		</section>
+	</section>
+</main>
+<%- include('./layout/footer') -%>
