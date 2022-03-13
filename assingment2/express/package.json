@@ -18,7 +18,7 @@
     "passport-local-mongoose": "^6.1.0"
   },
   "description": "A web app to track, manage, and follow up on applied and desired job postings.",
-  "main": "app.js",
+  "main": "./bin/www",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/csc530/COMP2068.git"
