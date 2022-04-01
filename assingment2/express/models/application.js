@@ -7,12 +7,15 @@ const schemaDefinition = {
 		type: String,
 		required: true,
 	},
-	appliedOn: {
-		type: Date
-	},
-	response: {
+	applicationDate: Date,
+	action: {
 		type: String,
 		default: 'TO DO'
+	},
+	postedDate: Date,
+	uid: {
+		type: String,
+		required: true
 	}
 };
 // Create a new mongoose schema using the definition object
