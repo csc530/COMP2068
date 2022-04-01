@@ -21,4 +21,4 @@ const schemaDefinition = {
 // Create a new mongoose schema using the definition object
 var mongooseSchema = new mongoose.Schema(schemaDefinition);
 // Create a new mongoose model using the mongoose schema and export the new model
-module.exports = mongoose.model('Project', mongooseSchema);
+module.exports = mongoose.model('Applications', mongooseSchema);

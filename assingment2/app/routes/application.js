@@ -33,12 +33,11 @@ router.get('/add', (req, res, next)=>{
 	const renderParams = {
 		title: 'Create new application'
 	};
-	console.log(req.session.user);
 	res.render('application/add', renderParams);
 });
 /* POST add application */
 router.post('/add',(req, res, next)=>{
-	const uid = req.sessionID;//TODO replace with req.user.id
+	const uid = req.user._id.toString();
 	const values = req.body;
 	const jobTitle = values.jobTitle.toString().trim();
 	console.log(jobTitle);
@@ -52,7 +51,7 @@ router.post('/add',(req, res, next)=>{
 		action: action,
 		uid: uid
 	}, (err, application)=>{
-		if(err)
+		if(err || !application)
 		{
 			console.log(`Error: ${err}`);
 			res.status(400);
@@ -60,7 +59,7 @@ router.post('/add',(req, res, next)=>{
 			res.redirect('add');
 		}
 		else
-			res.redirect('add');
+			res.redirect('/application');
 	});
 });
 module.exports = router;
