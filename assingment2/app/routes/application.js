@@ -22,6 +22,7 @@ router.get('/add', (req, res, next)=>{
 	const renderParams = {
 		title: 'Create new application'
 	};
+	console.log(req.session.user);
 	res.render('application/add', renderParams);
 });
 /* POST add application */

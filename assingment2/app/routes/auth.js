@@ -27,8 +27,16 @@ router.post('/login', (req, res, next) => {
 		}
 		else
 		{
-			req.session.user = user;
-			res.redirect('/application/');
+			if(!user)
+			{
+				res.status(400);
+				res.redirect('login');
+			}
+			else
+			{
+				req.session.user = user;
+				res.redirect('/application/');
+			}
 		}
 	});
 });
@@ -54,7 +62,7 @@ router.post('/register', (req, res, next) => {
 	// ? Check if they is already an account with the given email
 	User.findOne({
 		username: email
-	}, (err, user) => {
+	}, (err, userDB) => {
 		if(err)
 		{
 			console.log(err);
@@ -64,9 +72,9 @@ router.post('/register', (req, res, next) => {
 		else
 		{
 			//there is a user with the given email
-			if(user)
+			if(userDB)
 			{
-				console.log(user);
+				console.log(userDB);
 				res.status(400);
 				res.redirect('register');
 			}
