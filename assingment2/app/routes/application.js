@@ -1,11 +1,22 @@
-
 var express = require('express');
 var router = express.Router();
 
 const User = require('./../models/user');
 const Application = require('./../models/application');
+
+//? create reusable middleware function
+function authenticate(req, res, next) {
+	if(req.isAuthenticated())
+		return next();
+	else
+		res.redirect('/auth/login');
+}
+
+// ? add authentication first to router to protect all of the routes pages; needs to be authenticated to see anything pertaining to applications
+router.use(authenticate);
+
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/',  function (req, res, next) {
 	const renderParams = {
 		title: 'Job Application Manager',
 	};
