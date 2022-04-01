@@ -29,7 +29,7 @@ mongoose
 //Configure session and passport before all router declarations
 //1. configure the app to use sessions
 app.use(session({
-	secret: 'w2022projectTracker',
+	secret: process.env['superSecret'],
 	resave: false,
 	saveUninitialized: false
 }));
