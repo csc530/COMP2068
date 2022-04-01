@@ -10,8 +10,16 @@ router.get('/', function (req, res, next) {
 		if(err)
 			return console.log(err);
 		renderParams.data = applications;
-		res.render('application', renderParams);
+		res.render('applications/application', renderParams);
 	});
+});
+
+/* GET Add */
+router.get('/add', function (req, res, next) {
+	const renderParams = {
+		title: 'Add Application',
+	};
+	res.render('applications/add', renderParams);
 });
 
 module.exports = router;
