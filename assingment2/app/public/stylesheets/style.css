@@ -14,3 +14,14 @@ select.select {
 	padding-right: calc(0.75em - 1px);
 	padding-top: calc(0.5em - 1px);
 }
+
+/* Keep the footer at the bottom */
+html,
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+body > footer {
+    margin-top: auto;
+}
