@@ -16,7 +16,7 @@ router.post('/login', (req, res, next) => {
 	const email = req.body.email;
 	const password = req.body.password;
 	User.findOne({
-		email: email,
+		username: email,
 		password: password
 	}, (err, user) => {
 		if(err)
@@ -27,16 +27,8 @@ router.post('/login', (req, res, next) => {
 		}
 		else
 		{
-			if(user)
-			{
-				req.session.user = user;
-				res.redirect('/application/');
-			}
-			else
-			{
-				res.status(400);
-				res.redirect('login');
-			}
+			req.session.user = user;
+			res.redirect('/application/');
 		}
 	});
 });
@@ -56,20 +48,44 @@ router.post('/register', (req, res, next) => {
 	const email = req.body.email;
 	const password = req.body.password;
 	const user = new User({
-		email: email,
+		username: email,
 		password: password,
 	});
-	user.save((err, user) => {
+	// ? Check if they is already an account with the given email
+	User.findOne({
+		username: email
+	}, (err, user) => {
 		if(err)
 		{
 			console.log(err);
-			res.status(500);
+			res.status(400);
 			res.redirect('register');
 		}
 		else
 		{
-			req.session.user = user;
-			res.redirect('/application/');
+			//there is a user with the given email
+			if(user)
+			{
+				console.log(user);
+				res.status(400);
+				res.redirect('register');
+			}
+			else
+			{
+				user.save((err, user) => {
+					if(err)
+					{
+						console.log(err);
+						res.status(500);
+						res.redirect('register');
+					}
+					else
+					{
+						req.session.user = user;
+						res.redirect('/application/');
+					}
+				});
+			}
 		}
 	});
 });
