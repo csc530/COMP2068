@@ -1,0 +1,32 @@
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<link rel='stylesheet' href='/stylesheets/style.css' type='text/css' />
+		 <script src="" defer></script>
+		<link
+			rel='stylesheet'
+			href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css'
+			integrity='sha512-IgmDkwzs96t4SrChW29No3NXBIBv8baW490zk5aXvhCD8vuZM3yUSkbyTBcXohkySecyzIrUwiF/qV0cuPcL3Q=='
+			crossorigin='anonymous'
+			referrerpolicy='no-referrer'
+		/>
+		<link rel='icon' href='images/favicon.svg' type='image/x-icon' />
+		<title>{{title}}</title>
+	</head>
+	<body class='container is-fluid'>
+		<header class='header'>
+			<nav class='navbar'>
+				<a href='/' class='navbar-item'>Home</a>
+				<a href='/application' class='navbar-item'>Applications</a>
+				<a href='/login' class='navbar-item'>Log in</a>
+				<a href='/signUp' class='navbar-item'>Sign up</a>
+			</nav>
+		</header>
+		<main class='content'>
+			{{{body}}}
+		</main>
+		<footer class='footer'></footer>
+	</body>
+</html>
