@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var applicationRouter = require('./routes/application');
+const authRouter = require('./routes/auth');
 
 //passport related objects
 const passport = require('passport');
@@ -21,7 +22,7 @@ const dbString = process.env['db'] + 'assignment2';
 // Use the connect method, and the two handlers to try to connect to the DB
 mongoose
 	.connect(dbString, {useNewUrlParser: true, useUnifiedTopology: true})
-	.then(message => console.log('Connected successfully!\n' + message.connection.db.databaseName))
+	.then(message => console.log('Connected successfully!\nUsing database: ' + message.connection.db.databaseName))
 	.catch(error => console.log(`Error while connecting! ${error}`));
 
 
@@ -33,7 +34,8 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false
 }));
-//2. Initialize passport
+
+//2. configure the app to use passport
 app.use(passport.initialize());
 app.use(passport.session());
 //3. Link passport to user model (mongoose)
@@ -56,6 +58,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/application', applicationRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -30,12 +30,12 @@ router.post('/login', (req, res, next) => {
 			if(user)
 			{
 				req.session.user = user;
-				res.redirect('login');
+				res.redirect('/application/');
 			}
 			else
 			{
 				res.status(400);
-				res.redirect('/application/');
+				res.redirect('login');
 			}
 		}
 	});
@@ -74,3 +74,5 @@ router.post('/register', (req, res, next) => {
 	});
 });
 //#endregion
+
+module.exports = router;
