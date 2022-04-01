@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const passport = require('passport');
 
 //#region Login
 /* GET login page. */
@@ -12,34 +13,20 @@ router.get('/login', (req, res, next) => {
 });
 
 /* POST login page. */
-router.post('/login', (req, res, next) => {
-	const email = req.body.email;
-	const password = req.body.password;
-	User.findOne({
-		username: email,
-		password: password
-	}, (err, user) => {
-		if(err)
-		{
-			console.log(err);
-			res.status(400);
-			res.redirect('login');
-		}
-		else
-		{
-			if(!user)
-			{
-				res.status(400);
-				res.redirect('login');
-			}
-			else
-			{
-				req.session.user = user;
-				res.redirect('/application/');
-			}
-		}
-	});
-});
+router.post('/login',
+	/** Adds username field to request body so passport can authenticate
+	 * because that's where ti looks for it (and I didn't want to change up all my code) */
+	(req, res, next)=>{
+		req.body.username = req.body.email;
+		next();
+	},
+	(passport.authenticate('local', {
+		successRedirect: '/application/',
+		failureRedirect: 'login',
+		failureMessage: 'Incorrect Credentials'
+	}
+	))
+);
 //#endregion
 
 //#region Register
@@ -55,48 +42,31 @@ router.get('/register', (req, res, next) => {
 router.post('/register', (req, res, next) => {
 	const email = req.body.email;
 	const password = req.body.password;
-	const user = new User({
-		username: email,
-		password: password,
-	});
-	// ? Check if they is already an account with the given email
-	User.findOne({
-		username: email
-	}, (err, userDB) => {
-		if(err)
-		{
-			console.log(err);
-			res.status(400);
-			res.redirect('register');
-		}
-		else
-		{
-			//there is a user with the given email
-			if(userDB)
+	User.register(
+		new User({username: email}),
+		password,
+		(err, newUser) => {
+			if(err)
 			{
-				console.log(userDB);
-				res.status(400);
-				res.redirect('register');
+				console.log(err);
+				res.status(500);
+				return res.redirect('register');
 			}
 			else
-			{
-				user.save((err, user) => {
+				req.login(newUser, err => {
 					if(err)
 					{
 						console.log(err);
 						res.status(500);
-						res.redirect('register');
+						return res.redirect('register');
 					}
 					else
-					{
-						req.session.user = user;
-						res.redirect('/application/');
-					}
+						return res.redirect('/application/');
 				});
-			}
 		}
-	});
+	);
 });
+
 //#endregion
 
 module.exports = router;
