@@ -7,6 +7,7 @@ const schemaDefinition = {
 		type: String,
 		required: true,
 	},
+	description: String,
 	applicationDate: Date,
 	action: {
 		type: String,
