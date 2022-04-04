@@ -19,19 +19,29 @@ router.use(authenticate);
 router.get('/',  function (req, res, next) {
 	const renderParams = {
 		title: 'Job Application Manager',
+		applications: []
 	};
-	Application.find((err, applications) => {
-		if(err)
-			return console.log(err);
-		renderParams.data = applications;
-		res.render('application/index', renderParams);
-	});
+	Application.find(
+		{uid: req.user.id.toString()},
+		(err, applications) => {
+			if(err)
+			{
+				console.log(err);
+				return res.sendStatus(500);
+			}
+			else
+			{
+				renderParams.applications= applications;
+				res.render('application/index', renderParams);
+			}
+		}
+	);
 });
 
 /* GET add application */
 router.get('/add', (req, res, next)=>{
 	const renderParams = {
-		title: 'Create new application'
+		title: 'Create new application',
 	};
 	res.render('application/add', renderParams);
 });
@@ -59,7 +69,10 @@ router.post('/add',(req, res, next)=>{
 			res.redirect('add');
 		}
 		else
+		{
+			res.status(200);
 			res.redirect('/application');
+		}
 	});
 });
 module.exports = router;

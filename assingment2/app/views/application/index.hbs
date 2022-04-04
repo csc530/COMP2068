@@ -4,23 +4,25 @@
 
 {{#if applications}}
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Job title</th>
-				<th>Date posted</th>
-				<th>Date applied</th>
-				<th>Action taken</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{#each applications as app}}
-				<tr>{{app.jobTitle}}</tr>
-				<tr>{{app.postedDate}}</tr>
-				<tr>{{app.applicationDate}}</tr>
-				<tr>{{app.action}}</tr>
-			{{/each}}
-		</tbody>
-	</table>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Job title</th>
+			<th>Date posted</th>
+			<th>Date applied</th>
+			<th>Action taken</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each applications as |app|}}
+		<tr>
+			<td>{{app.jobTitle}}</td>
+			<td>{{app.postedDate}}</td>
+			<td>{{app.applicationDate}}</td>
+			<td>{{app.action}}</td>
+		</tr>
+		{{/each}}
+	</tbody>
+</table>
 
 {{/if}}
