@@ -1,0 +1,9 @@
+<h1 class="title">{{title}}</h1>
+<input type="text" id="search" placeholder="Search" />
+<ul id="results">
+  {{#each results}}
+    <li>
+      <a href="{{url}}">{{title}}</a>
+      <p>{{description}}</p>
+    </li>
+  {{/each}}

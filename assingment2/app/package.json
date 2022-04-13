@@ -13,6 +13,7 @@
     "express-session": "^1.17.2",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
+    "indeed-job-scraper": "^3.1.2",
     "mongoose": "^6.2.7",
     "morgan": "~1.9.1",
     "passport": "^0.5.2",

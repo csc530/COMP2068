@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var applicationRouter = require('./routes/application');
 const authRouter = require('./routes/auth');
+const indeedRouter = require('./routes/indeed');
 
 //passport related objects
 const passport = require('passport');
@@ -59,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/application', applicationRouter);
 app.use('/auth', authRouter);
+app.use('/indeed', indeedRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
