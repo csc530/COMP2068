@@ -12,7 +12,6 @@ const wss = new WebSocketServer({port: 8080});
 
 wss.on('connection', function connection(ws) {
 	ws.on('message', function message(msg) {
-		ws.send('received:'+ msg);
 		console.log(msg.toString());
 		getJobsList({
 			location: 'Canada',
@@ -24,8 +23,6 @@ wss.on('connection', function connection(ws) {
 				ws.send(JSON.stringify(jobs));
 			});
 	});
-
-	ws.send('something');
 });
 
 
