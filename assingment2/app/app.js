@@ -12,6 +12,7 @@ const indeedRouter = require('./routes/indeed');
 //passport related objects
 const passport = require('passport');
 const session = require('express-session');
+const githubStrategy = require('passport-github2').Strategy;
 
 const mongoose = require('mongoose');
 
@@ -26,15 +27,16 @@ mongoose
 	.then(message => console.log('Connected successfully!\nUsing database: ' + message.connection.db.databaseName))
 	.catch(error => console.log(`Error while connecting! ${error}`));
 
-
 //#region passport authentication
 //Configure session and passport before all router declarations
 //1. configure the app to use sessions
-app.use(session({
-	secret: process.env['superSecret'],
-	resave: false,
-	saveUninitialized: false
-}));
+app.use(
+	session({
+		secret: process.env['superSecret'],
+		resave: false,
+		saveUninitialized: false,
+	})
+);
 
 //2. configure the app to use passport
 app.use(passport.initialize());
@@ -46,6 +48,42 @@ passport.use(User.createStrategy());
 //4. Set passport to read/write user data to/from session object
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+//3.b Create github auth strategy
+passport.use(
+	new githubStrategy(
+		{
+			clientID: process.env['githubID'],
+			clientSecret: process.env['githubSecret'],
+			//todo change for production
+			callbackURL: 'http://localhost:3000/auth/github/callback/',
+		},
+		// create async callback function
+		// profile is github profile
+		async (accessToken, refreshToken, profile, done) => {
+			// search user by ID
+			const user = await User.findOne({oauthId: profile.id});
+			// user exists (returning user)
+			if(user) {
+				// no need to do anything else
+				return done(null, user);
+			} else{
+				// new user so register them in the db
+				const newUser = new User({
+					username: profile.username,
+					oauthId: profile.id,
+					oauthProvider: 'Github',
+					created: Date.now(),
+				});
+				// add to DB
+				const savedUser = await newUser.save();
+				// return
+				return done(null, savedUser);
+			}
+		}
+	)
+);
+
 //#endregion
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -79,3 +117,4 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+

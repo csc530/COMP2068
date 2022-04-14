@@ -69,4 +69,24 @@ router.post('/register', (req, res, next) => {
 
 //#endregion
 
+//#region Github
+
+/*
+ GET handler for /github
+ call passport authenticate and pass the name of the strategy
+ and the information we require from github
+ */
+router.get('/github', passport.authenticate('github', {scope: ['user.email']}));
+//GET handler for github/callback
+//GitHub sending the user back
+router.get('/github/callback',
+	//? if login is unsuccessful , redirects to login
+	passport.authenticate('github', {failureRedirect: '/auth/login'}),
+	(req, res, next) => {
+		res.redirect('/application');
+	});
+/* * Register */
+//#endregion
+
+
 module.exports = router;
