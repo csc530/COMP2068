@@ -1,9 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+// *  websocket package for server side websocket
 const{config, getJobsList, getJobsPDF} = require('indeed-job-scraper');
+const{WebSocketServer} = require('ws');
 config['verbose']   = true;  //to deliver information about current processing
+require('ws');
 
+
+const wss = new WebSocketServer({port: 8080});
+
+wss.on('connection', function connection(ws) {
+	ws.on('message', function message(msg) {
+		ws.send('received:'+ msg);
+		console.log(msg.toString());
+		getJobsList({
+			location: 'Canada',
+			sort: 'date',
+			fromdays: 3,
+		})
+			.then(jobs =>	{
+				console.log('jobs received');
+				ws.send(JSON.stringify(jobs));
+			});
+	});
+
+	ws.send('something');
+});
 
 
 /* GET  jobs */
@@ -15,19 +38,8 @@ router.get('/', (req, res, next) => {
 		title: 'Search Indeed jobs',
 		jobs: []
 	};
-	getJobsList({
-		location: 'Canada',
-		sort: 'date',
-		fromdays: 3,
-		// queryTitle: searchTitle ? searchTitle : null,
+	res.render('indeed/index', renderParams);
 
-	}).then(jobs => {
-		console.log('Jobs: ' + jobs.length);
-		// console.log(jobs);
-		console.log('Search: ' + searchTitle);
-		renderParams.jobs = jobs;
-		res.render('indeed/index', renderParams);
-	});
 });
 
 /* GET loading page */
