@@ -1,9 +1,24 @@
 <h1 class="title">{{title}}</h1>
-<input type="text" id="search" placeholder="Search" />
-<ul id="results">
-  {{#each results}}
-    <li>
-      <a href="{{url}}">{{title}}</a>
-      <p>{{description}}</p>
-    </li>
-  {{/each}}
+<form action="" method="get" class="form block">
+	<label>Search</label>
+	<input type="text" id="search" placeholder="Search" name="search" class="input" />
+</form>
+<table id="results" class="table  is-striped is-hoverable is-fullwidth">
+	<thead>
+		<th>Job title</th>
+		<th>Description snippet</th>
+    <th>Salary</th>
+		<th>Date posted</th>
+	</thead>
+	<tbody>
+		{{#each jobs}}
+    <tr>
+      <td>{{this.job-title}}</td>
+      <td>{{this.job-snippet}}</td>
+      <td>{{this.job-salary}}</td>
+      <td>{{this.post-date}}</td>
+    </tr>
+    </a>
+		{{/each}}
+	</tbody>
+</table>
