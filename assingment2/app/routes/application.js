@@ -121,9 +121,8 @@ function uploadActions(uid, actions) {
 					}
 				});
 		}
-	else
+	else if(actions.toString().trim() !== 'NULL')
 		Action.findOne({uid: uid, name: actions}, (err, action) => {
-			console.log(action);
 			if(err)
 				console.log(err);
 			else if(!action) {
