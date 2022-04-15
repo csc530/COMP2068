@@ -93,8 +93,9 @@ passport.use(
 
 //LongDate value comes from the UI as 'day Mon year HH:MM:SS Timezone (tz name)'
 //and this helper method will return 2022-02-14 << international format
-hbs.registerHelper('toShortDate', longDateVal=>{
-	return new hbs.SafeString(longDateVal.toLocaleDateString('en-CA'));
+hbs.registerHelper('toShortDate', date=>{
+	if(date)
+		return new hbs.SafeString(date.toLocaleDateString());
 });
 
 // function name and helper function with parameters
@@ -109,7 +110,7 @@ hbs.registerHelper('authBar', (user) => {
 	}
 	// * If not logged in, show login button
 	return new hbs.SafeString(
-		`<a href="#" class="navbar-item level-right">${user.name}</a>
+		`<a href="#" class="navbar-item level-right">${user.username}</a>
 		<a href="/auth/logout" class="navbar-item">Logout</a>`
 	);
 });

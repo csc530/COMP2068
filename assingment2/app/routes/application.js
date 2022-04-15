@@ -73,4 +73,69 @@ router.post('/add', (req, res, next) => {
 		}
 	});
 });
+
+/* GET edit application */
+router.get('/edit/:id', (req, res, next) => {
+	const id = req.params.id;
+	const renderParams = {
+		title: 'Edit application',
+		user: req.user
+	};
+	Application.findById(id, (err, application) => {
+		if(err || !application) {
+			console.log(`Error: ${err}`);
+			res.status(400);
+			//redirect back with status code 400 displaying error
+			res.redirect('/application');
+		}
+		else{
+			renderParams.application = application;
+			res.render('application/edit', renderParams);
+		}
+	});
+});
+/* POST edit application */
+router.post('/edit/:id', (req, res, next) => {
+	const id = req.params.id;
+	const values = req.body;
+	const jobTitle = values.jobTitle.toString().trim();
+	const postedDate = values.postedDate;
+	const action = values.action;
+	const applicationDate = values.applicationDate;
+	Application.findByIdAndUpdate(id, {
+		jobTitle: jobTitle,
+		applicationDate: applicationDate,
+		postedDate: postedDate,
+		action: action
+	}, (err, application) => {
+		if(err || !application) {
+			console.log(`Error: ${err}`);
+			res.status(400);
+			//redirect back with status code 400 displaying error
+			res.redirect('/application');
+		}
+		else{
+			res.status(200);
+			res.redirect('/application');
+		}
+	});
+});
+
+/* GET delete application */
+router.get('/delete/:id', (req, res, next) => {
+	const id = req.params.id;
+	Application.findByIdAndRemove(id, (err, application) => {
+		if(err || !application) {
+			console.log(`Error: ${err}`);
+			res.status(400);
+			//redirect back with status code 400 displaying error
+			res.redirect('/application');
+		}
+		else{
+			res.status(200);
+			res.redirect('/application');
+		}
+	});
+});
+
 module.exports = router;
