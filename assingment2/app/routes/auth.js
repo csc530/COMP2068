@@ -69,6 +69,12 @@ router.post('/register', (req, res, next) => {
 
 //#endregion
 
+/* GET logout */
+router.get('/logout', (req, res, next) => {
+	req.logout();
+	res.redirect('/');
+});
+
 //#region Github
 
 /*

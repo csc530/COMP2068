@@ -22,9 +22,10 @@
 					<td>{{toShortDate app.applicationDate}}</td>
 					<td>{{app.action}}</td>
 					<td>
-						<a class="button is-warning is-fullwidth" href="/application/edit/{{app._id}}"><i class="fa-solid fa-edit icon"></i></a>
+						<a class="button is-warning is-fullwidth" href="/application/edit/{{app._id}}" title="Edit application"><i class="fa-solid fa-edit icon"></i></a>
 						<a
 							class="button is-danger is-fullwidth"
+								title="Delete application"
 							href="/application/delete/{{app._id}}"
 							onclick="return confirm('Are you sure you want to delete this')"
 						><i class="fa-solid fa-minus icon"></i></a>
