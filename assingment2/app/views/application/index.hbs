@@ -4,8 +4,8 @@
 
 {{#if applications}}
 
-	<table class="table">
-		
+	<table class="table table is-fullwidth is-hoverable">
+
 		<thead>
 			<tr>
 				<th>Job title</th>
@@ -22,7 +22,13 @@
 					<td>{{app.jobTitle}}</td>
 					<td>{{toShortDate app.postedDate}}</td>
 					<td>{{toShortDate app.applicationDate}}</td>
-					<td>{{app.action}}</td>
+					<td>
+						<ul id="is-unstyled">
+							{{#each app.action}}
+								<li>{{this}}</li>
+							{{/each}}
+						</ul>
+					</td>
 					<td>
 						<a class="button is-warning is-fullwidth" href="/application/edit/{{app._id}}" title="Edit application">
 							<i class="fa-solid fa-edit icon"></i>

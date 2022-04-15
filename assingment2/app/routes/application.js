@@ -67,8 +67,7 @@ router.post('/add', (req, res, next) => {
 	const actions = values.action;
 
 	// * Upload actions for user to refer to again
-	actions.forEach(action =>
-	{
+	actions.forEach(action => {
 		if(action !== 'NULL')
 			Action.create(
 				{
@@ -116,7 +115,18 @@ router.get('/edit/:id', (req, res, next) => {
 		}
 		else{
 			renderParams.application = application;
-			res.render('application/edit', renderParams);
+			Action.find(
+				{uid: req.user.id.toString()},
+				(err, actions) => {
+					if(err) {
+						console.log(err);
+						return res.sendStatus(500);
+					}
+					else
+						renderParams.actions = actions;
+					res.render('application/edit', renderParams);
+				}
+			);
 		}
 	});
 });

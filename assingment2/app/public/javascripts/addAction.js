@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
 	const select = document.querySelector('form select#actions');
-	const addAction = document.querySelector('form select#actions option#addAction');
+	const addOption = document.querySelector('form select#actions option#addAction');
 
-	addAction.addEventListener('click', function (event) {
+	addOption.onselect = addAction;
+	addOption.addEventListener('click', addAction);
+
+	function addAction(event){
 		event.preventDefault();
-		addAction.selected = false;
+		addOption.selected = false;
 		const action = prompt('Add action');
 
 		if(!action)
@@ -13,5 +16,5 @@ document.addEventListener('DOMContentLoaded', function () {
 		option.text = action;
 		option.value = action;
 		select.add(option);
-	});
+	}
 });
