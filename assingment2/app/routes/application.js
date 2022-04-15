@@ -3,6 +3,7 @@ var router = express.Router();
 
 const User = require('./../models/user');
 const Application = require('./../models/application');
+const Action = require('./../models/action');
 
 //? create reusable middleware function
 function authenticate(req, res, next) {
@@ -43,8 +44,19 @@ router.get('/add', (req, res, next) => {
 		title: 'Create new application',
 		user: req.user
 	};
-	res.render('application/add', renderParams);
+	Action.find(
+		{uid: req.user.id.toString()},
+		(err, actions) => {
+			if(err) {
+				console.log(err);
+				return res.sendStatus(500);
+			}
+			else
+				renderParams.actions = actions;
+			res.render('application/add', renderParams);
+		});
 });
+
 /* POST add application */
 router.post('/add', (req, res, next) => {
 	const uid = req.user._id.toString();
@@ -52,13 +64,27 @@ router.post('/add', (req, res, next) => {
 	const jobTitle = values.jobTitle.toString().trim();
 	console.log(jobTitle);
 	const postedDate = values.postedDate;
-	const action = values.action;
+	const actions = values.action;
+
+	// * Upload actions for user to refer to again
+	actions.forEach(action =>
+	{
+		if(action !== 'NULL')
+			Action.create(
+				{
+					name: action,
+					uid: uid
+				},
+
+			);
+	});
+
 	const applicationDate = values.applicationDate;
 	Application.create({
 		jobTitle: jobTitle,
 		applicationDate: applicationDate,
 		postedDate: postedDate,
-		action: action,
+		action: actions,
 		uid: uid
 	}, (err, application) => {
 		if(err || !application) {

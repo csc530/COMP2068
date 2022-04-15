@@ -3,17 +3,10 @@ const mongoose = require('mongoose');
 
 // Expanded definition
 const schemaDefinition = {
-	jobTitle: {
+	name: {
 		type: String,
 		required: true,
 	},
-	description: String,
-	applicationDate: Date,
-	action: {
-		type: Array.of(String),
-		default: 'TO DO'
-	},
-	postedDate: Date,
 	uid: {
 		type: String,
 		required: true
@@ -22,4 +15,4 @@ const schemaDefinition = {
 // Create a new mongoose schema using the definition object
 var mongooseSchema = new mongoose.Schema(schemaDefinition);
 // Create a new mongoose model using the mongoose schema and export the new model
-module.exports = mongoose.model('Applications', mongooseSchema);
+module.exports = mongoose.model('Action', mongooseSchema);
