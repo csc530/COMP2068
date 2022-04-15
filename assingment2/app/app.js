@@ -110,7 +110,7 @@ hbs.registerHelper('authBar', (user) => {
 	}
 	// * If not logged in, show login button
 	return new hbs.SafeString(
-		`<a href="#" class="navbar-item level-right">${user.username}</a>
+		`<a id="user-name" href="#" class="navbar-item level-right">${user.username}</a>
 		<a href="/auth/logout" class="navbar-item">Logout</a>`
 	);
 });
