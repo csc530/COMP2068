@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log('Connected to ' + url);
 		socket.onmessage = message=>{
 			const jobs = JSON.parse(message.data);
+			loadingSection.classList.add('is-hidden');
 			updateTable(jobs);
 		};
 	};
@@ -35,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	function updateTable(jobs){
-		loadingSection.classList.add('is-hidden');
 		for(let i = 0; i < jobs.length; i++) {
 			const job = jobs[i];
 			const row = document.createElement('tr');
@@ -45,11 +45,20 @@ document.addEventListener('DOMContentLoaded', () => {
 			const postedDate = document.createElement('td');
 			const actions = document.createElement('td');
 
-			const add = document.createElement('button');
+			const add = document.createElement('a');
 			const view = document.createElement('a');
-			
+			add.classList.add('button','is-primary','is-fullwidth');
+			add.textContent = 'Add';
+			view.classList.add('button','is-info','is-fullwidth');
+			view.textContent = 'Open in Indeed';
+			view.href = job['job-link'];
+			view.target = '_blank';
+			view.rel = 'noopener noreferrer';
 
-			const info = [title, snippet, salary, postedDate];
+			actions.appendChild(add);
+			actions.appendChild(view);
+
+			const info = [title, snippet, salary, postedDate, actions];
 
 			title.textContent = job['job-title'];
 			snippet.textContent = job['job-snippet'];
