@@ -79,7 +79,7 @@ router.get('/edit/:id', (req, res, next) => {
 	const id = req.params.id;
 	const renderParams = {
 		title: 'Edit application',
-		user: req.user
+		user: req.user,
 	};
 	Application.findById(id, (err, application) => {
 		if(err || !application) {
@@ -94,6 +94,7 @@ router.get('/edit/:id', (req, res, next) => {
 		}
 	});
 });
+
 /* POST edit application */
 router.post('/edit/:id', (req, res, next) => {
 	const id = req.params.id;
