@@ -117,11 +117,10 @@ hbs.registerHelper('authBar', (user) => {
 
 // function name and helper function with parameters
 hbs.registerHelper('createOption', (currentValue, selectedValue) => {
-	selectedValue = selectedValue.toString();
 	// initialize selected property
 	var selectedProperty = '';
 	// if values are equal set selectedProperty accordingly
-	if(currentValue === selectedValue)
+	if(currentValue == selectedValue)
 		selectedProperty = 'selected';
 
 	// return html code for this option element

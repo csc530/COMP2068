@@ -12,6 +12,7 @@
 				<th>Date posted</th>
 				<th>Date applied</th>
 				<th>Action taken</th>
+				<th>Response</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -29,7 +30,11 @@
 							{{/each}}
 						</ul>
 					</td>
+					<td>{{app.response}}</td>
 					<td>
+						{{#if app.jobLink}}
+						<a href="{{app.jobLink}}" target="_blank" class="button is-primary is-fullwidth">To Job</a>
+						{{/if}}
 						<a class="button is-warning is-fullwidth" href="/application/edit/{{app._id}}" title="Edit application">
 							<i class="fa-solid fa-edit icon"></i>
 						</a>
@@ -41,7 +46,7 @@
 						>
 							<i class="fa-solid fa-minus icon"></i>
 						</a>
-					</td>
+					</t>
 				</tr>
 			{{/each}}
 		</tbody>

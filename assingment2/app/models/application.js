@@ -14,9 +14,7 @@ const schemaDefinition = {
 		default: 'To Apply'
 	},
 	postedDate: Date,
-	response: {
-		enum: ['Accepted', 'Rejected', 'Pending'],
-	},
+	response: String,
 	jobLink: String,
 	uid: {
 		type: String,
