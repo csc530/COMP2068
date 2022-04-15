@@ -7,7 +7,8 @@ const passport = require('passport');
 /* GET login page. */
 router.get('/login', (req, res, next) => {
 	const renderParams = {
-		title: 'Login'
+		title: 'Login',
+		user: req.user
 	};
 	res.render('auth/login', renderParams);
 });
@@ -16,7 +17,7 @@ router.get('/login', (req, res, next) => {
 router.post('/login',
 	/** Adds username field to request body so passport can authenticate
 	 * because that's where ti looks for it (and I didn't want to change up all my code) */
-	(req, res, next)=>{
+	(req, res, next) => {
 		req.body.username = req.body.email;
 		next();
 	},
@@ -33,7 +34,8 @@ router.post('/login',
 /* GET register page. */
 router.get('/register', (req, res, next) => {
 	const renderParams = {
-		title: 'Register'
+		title: 'Register',
+		user: req.user
 	};
 	res.render('auth/register', renderParams);
 });
@@ -46,16 +48,14 @@ router.post('/register', (req, res, next) => {
 		new User({username: email}),
 		password,
 		(err, newUser) => {
-			if(err)
-			{
+			if(err) {
 				console.log(err);
 				res.status(500);
 				return res.redirect('register');
 			}
 			else
 				req.login(newUser, err => {
-					if(err)
-					{
+					if(err) {
 						console.log(err);
 						res.status(500);
 						return res.redirect('register');

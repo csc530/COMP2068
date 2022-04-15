@@ -16,22 +16,21 @@ function authenticate(req, res, next) {
 router.use(authenticate);
 
 /* GET home page. */
-router.get('/',  function (req, res, next) {
+router.get('/', function (req, res, next) {
 	const renderParams = {
 		title: 'Job Application Manager',
-		applications: []
+		applications: [],
+		user: req.user
 	};
 	Application.find(
 		{uid: req.user.id.toString()},
 		(err, applications) => {
-			if(err)
-			{
+			if(err) {
 				console.log(err);
 				return res.sendStatus(500);
 			}
-			else
-			{
-				renderParams.applications= applications;
+			else{
+				renderParams.applications = applications;
 				res.render('application/index', renderParams);
 			}
 		}
@@ -39,14 +38,15 @@ router.get('/',  function (req, res, next) {
 });
 
 /* GET add application */
-router.get('/add', (req, res, next)=>{
+router.get('/add', (req, res, next) => {
 	const renderParams = {
 		title: 'Create new application',
+		user: req.user
 	};
 	res.render('application/add', renderParams);
 });
 /* POST add application */
-router.post('/add',(req, res, next)=>{
+router.post('/add', (req, res, next) => {
 	const uid = req.user._id.toString();
 	const values = req.body;
 	const jobTitle = values.jobTitle.toString().trim();
@@ -60,16 +60,14 @@ router.post('/add',(req, res, next)=>{
 		postedDate: postedDate,
 		action: action,
 		uid: uid
-	}, (err, application)=>{
-		if(err || !application)
-		{
+	}, (err, application) => {
+		if(err || !application) {
 			console.log(`Error: ${err}`);
 			res.status(400);
 			//redirect back with status code 400 displaying error
 			res.redirect('add');
 		}
-		else
-		{
+		else{
 			res.status(200);
 			res.redirect('/application');
 		}

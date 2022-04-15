@@ -4,7 +4,7 @@ const passport = require('passport');
 // *  websocket package for server side websocket
 const{config, getJobsList, getJobsPDF} = require('indeed-job-scraper');
 const{WebSocketServer} = require('ws');
-config['verbose']   = true;  //to deliver information about current processing
+config['verbose'] = true;  //to deliver information about current processing
 require('ws');
 
 
@@ -18,7 +18,7 @@ wss.on('connection', function connection(ws) {
 			sort: 'date',
 			fromdays: 3,
 		})
-			.then(jobs =>	{
+			.then(jobs => {
 				console.log('jobs received');
 				ws.send(JSON.stringify(jobs));
 			});
@@ -33,15 +33,17 @@ router.get('/', (req, res, next) => {
 	// res.redirect('/indeed/loading');
 	const renderParams = {
 		title: 'Search Indeed jobs',
-		jobs: []
+		jobs: [],
+		user: req.user,
 	};
 	res.render('indeed/index', renderParams);
 
 });
 
 /* GET loading page */
-router.get('/loading', function(req, res, next) {
-	res.render('loading', {title: 'Loading application'});
+router.get('/loading', function (req, res, next) {
+	res.render('loading', {title: 'Loading application', user: req.user});
+
 });
 
 function getLocation() {

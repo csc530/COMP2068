@@ -9,6 +9,8 @@ var applicationRouter = require('./routes/application');
 const authRouter = require('./routes/auth');
 const indeedRouter = require('./routes/indeed');
 
+const hbs = require('hbs');
+
 //passport related objects
 const passport = require('passport');
 const session = require('express-session');
@@ -85,6 +87,33 @@ passport.use(
 );
 
 //#endregion
+
+// HBS Helper Method to select values from dropdown lists
+
+
+//LongDate value comes from the UI as 'day Mon year HH:MM:SS Timezone (tz name)'
+//and this helper method will return 2022-02-14 << international format
+hbs.registerHelper('toShortDate', longDateVal=>{
+	return new hbs.SafeString(longDateVal.toLocaleDateString('en-CA'));
+});
+
+// function name and helper function with parameters
+hbs.registerHelper('authBar', (user) => {
+	// * Check  user is logged in
+	if(!user) {
+		// * If logged in, show logout button
+		return new hbs.SafeString(
+			`<a href="/auth/login" class="navbar-item">Log in</a>
+			<a href="/auth/register" class="navbar-item">Sign up</a>`
+		);
+	}
+	// * If not logged in, show login button
+	return new hbs.SafeString(
+		`<a href="#" class="navbar-item level-right">${user.name}</a>
+		<a href="/auth/logout" class="navbar-item">Logout</a>`
+	);
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
