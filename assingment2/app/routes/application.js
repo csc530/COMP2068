@@ -62,9 +62,12 @@ router.post('/add', (req, res, next) => {
 	const uid = req.user._id.toString();
 	const values = req.body;
 	const jobTitle = values.jobTitle.toString().trim();
-	console.log(jobTitle);
 	const postedDate = values.postedDate;
 	const actions = values.action;
+	const jobLink = values.jobLink;
+	if(values.response === 'NULL')
+		values.response = null;
+	const response = values.response;
 
 	// * Upload actions for user to refer to again
 	actions.forEach(action => {
@@ -74,7 +77,6 @@ router.post('/add', (req, res, next) => {
 					name: action,
 					uid: uid
 				},
-
 			);
 	});
 
@@ -84,7 +86,9 @@ router.post('/add', (req, res, next) => {
 		applicationDate: applicationDate,
 		postedDate: postedDate,
 		action: actions,
-		uid: uid
+		uid: uid,
+		jobLink: jobLink,
+		response: response
 	}, (err, application) => {
 		if(err || !application) {
 			console.log(`Error: ${err}`);
@@ -139,11 +143,17 @@ router.post('/edit/:id', (req, res, next) => {
 	const postedDate = values.postedDate;
 	const action = values.action;
 	const applicationDate = values.applicationDate;
+	const jobLink = values.jobLink;
+	if(values.response === 'NULL')
+		values.response = null;
+	const response = values.response;
 	Application.findByIdAndUpdate(id, {
 		jobTitle: jobTitle,
 		applicationDate: applicationDate,
 		postedDate: postedDate,
-		action: action
+		action: action,
+		jobLink: jobLink,
+		response: response
 	}, (err, application) => {
 		if(err || !application) {
 			console.log(`Error: ${err}`);
