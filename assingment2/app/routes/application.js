@@ -70,15 +70,7 @@ router.post('/add', (req, res, next) => {
 	const response = values.response;
 
 	// * Upload actions for user to refer to again
-	actions.forEach(action => {
-		if(action !== 'NULL')
-			Action.create(
-				{
-					name: action,
-					uid: uid
-				},
-			);
-	});
+	uploadActions(uid, actions);
 
 	const applicationDate = values.applicationDate;
 	Application.create({
@@ -102,6 +94,45 @@ router.post('/add', (req, res, next) => {
 		}
 	});
 });
+
+function uploadActions(uid, actions) {
+	console.dir(actions);
+	// * Find if there is already an action with the same name to the user if not upload it
+	// ? the two cases of the if is if an array of actions is passed or just one action
+	if(typeof actions === 'object')
+		for(let i = 0; i < actions.length; i++) {
+			if(actions[i].toString().trim() !== 'NULL')
+				Action.findOne({uid: uid, name: actions[i]}, (err, action) => {
+					console.log(`Action: ${action}`);
+					if(err)
+						console.log(err);
+					else if(!action) {
+						Action.create({
+							name: actions[i],
+							uid: uid
+						}, (err, action) => {
+							if(err)
+								console.log(err);
+						});
+					}
+				});
+		}
+	else
+		Action.findOne({uid: uid, name: actions}, (err, action) => {
+			console.log(action);
+			if(err)
+				console.log(err);
+			else if(!action) {
+				Action.create({
+					name: actions,
+					uid: uid
+				}, (err, action) => {
+					if(err)
+						console.log(err);
+				});
+			}
+		});
+}
 
 /* GET edit application */
 router.get('/edit/:id', (req, res, next) => {
