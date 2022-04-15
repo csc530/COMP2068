@@ -17,17 +17,20 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log('Connected to ' + url);
 		socket.onmessage = message=>{
 			const jobs = JSON.parse(message.data);
-			loadingSection.classList.add('is-hidden');
-			updateTable(jobs);
+			if(jobs.length === 0)
+				loadingTxt.textContent = 'No jobs found';
+			else
+			{
+				loadingSection.classList.add('is-hidden');
+				updateTable(jobs);
+			}
 		};
 	};
 
 	form.addEventListener('submit', event => {
 		event.preventDefault();
 		const data = search.value.trim();
-		console.log(data);
 		const rows = document.querySelectorAll('table#results tbody tr');
-		console.log(rows);
 		// ? deleate the rows; of previous query
 		rows.forEach(row=> row.remove());
 		loadingSection.classList.remove('is-hidden');

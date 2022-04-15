@@ -12,12 +12,17 @@ const wss = new WebSocketServer({port: 8080});
 
 wss.on('connection', function connection(ws) {
 	ws.on('message', function message(msg) {
-		console.log(msg.toString());
-		getJobsList({
+		const title = msg.toString();
+		const searchParams =
+		{
 			location: 'Canada',
 			sort: 'date',
 			fromdays: 3,
-		})
+		};
+		if(title)
+			searchParams.queryTitle = title;
+		console.log('message', title, searchParams);
+		getJobsList(searchParams)
 			.then(jobs => {
 				console.log('jobs received');
 				ws.send(JSON.stringify(jobs));
