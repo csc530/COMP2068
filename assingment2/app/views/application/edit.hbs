@@ -26,5 +26,16 @@
 			<option class="is-uppercase">{{action.name}}</option>
 		{{/each}}
 	</select>
+	<label for="response" class="label">Response</label>
+	<select class="select input has-text-centered" id="responses" name="response">
+		<option value="NULL">Select a response</option>
+		<option>Accepted</option>
+		<option>Rejected</option>
+		<option>Pending</option>
+	</select>
+
+	<label for="" class="label">Job link</label>
+	<input type="text" placeholder="https://www.google.com" class="input" id="jobLink" name="jobLink" autocomplete="url" aria-autocomplete="both" />
+
 	<button type="submit" class="button is-primary" id="submitButton">Submit</button>
 </form>
