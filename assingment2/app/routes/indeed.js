@@ -30,11 +30,13 @@ router.get('/loading', function (req, res, next) {
 router.get('/add', function (req, res, next) {
 	const title = req.query.title;
 	const link = req.query.link;
+	const description = req.query.description;
 	Application.create(
 		{
 			jobTitle: title,
 			jobLink: link,
 			uid: req.user.id,
+			description: description
 		}
 		, (err, application) => {
 			if(err)
